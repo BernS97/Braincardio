@@ -1,15 +1,71 @@
 # BrainCard.
-[logo] "BrainCard Logo" //needs fix once merged to main. 
+
+[logo] "BrainCardio Logo" //needs fix once merged to main.
 
 ## About.
-*BrainCard* is a lightweight, fast and gamified flashcard application to support and fortify learning.
-With this project, we, the makers of Braincard, attempt bring a mobile, cross-device and interactive platform to reality: fast, free of charge, no clutter. If you like, toggle on our gamified elements to fuel motivation, interact with you co-learners and get the most out of your learning with competitve elements. 
+
+_BrainCardio_ is a lightweight, fast and gamified flashcard application to support and fortify learning.
+With this project, we, the makers of Braincard, attempt bring a mobile, cross-device and interactive platform to reality: fast, free of charge, no clutter. If you like, toggle on our gamified elements to fuel motivation, interact with you co-learners and get the most out of your learning with competitve elements.
 
 Happy learning.
-## How to get started.
-// more to come here.
 
 ## What tech we use.
-* persistence: :fire:Firebase
-* framework: :eyes: vue.js
-* UI elements: :bomb: ionic
+
+- persistence: :fire:Firebase
+- framework: :eyes: vue.js
+- UI elements: :bomb: ionic
+
+## Requirements
+
+- NodeJS == 14.0.0
+- Ionic == 7.0.2
+- Capacitor == 4.7.3
+- Vue == 3.2.47
+- Pinia == 2.0.34
+- Firebase = 9.19.1
+- Vuefire = 3.1.0
+- Npm == 8
+
+## Git flow
+
+We use the following branch naming convention:
+
+- features -> story/
+- bugfixes -> bugfix/
+
+## Start / Debug
+
+First we need install all dependencies with npm. In the root folder call:
+
+`npm install`
+
+### Start
+
+Now we can start the project with the following command:
+
+#### Web App
+
+`npx ionic serve`
+
+Afterwards your code will be availible on the following route:
+`localhost:9100`
+
+#### IOS App on Simulator
+
+`npx ionic cap run ios --target=TARGET_UUID  --livereload `
+
+### Debug project
+
+Use the source maps in the browser of your chosen, to debug the javascript code.
+
+## Build
+
+Use the following commands for building development:
+
+### Development
+
+`npx ionic build && npx cap copy`
+
+`npx cap sync --inline`
+
+`npx cap sync --inline`
