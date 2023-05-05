@@ -1,0 +1,7 @@
+{
+  "name": "braincardio",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
