@@ -17,6 +17,9 @@ const routes = [
     path: "/home",
     name: "Home",
     component: HomePage,
+    meta: {
+      requiresAuth: false,
+    },
   },
 ];
 
@@ -29,7 +32,8 @@ export default function (pinia) {
 
   router.beforeEach(async (to) => {
     // routes with `meta: { requiresAuth: true }` will check for the users, others won't
-    if (to.fullPath != "/login") {
+    //TODO: Add Logic
+    if (to.meta.requiresAuth) {
       let currentUser = userStore.getUser;
       if (!currentUser.loggedIn) currentUser = await userStore.fetchUser();
       // if the user is not logged in, redirect to the login page

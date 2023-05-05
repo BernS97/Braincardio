@@ -4,7 +4,7 @@
       <img src="public/logo.png" alt="logo">
     </div>
     <ion-content :scroll-y="false">
-      <h1>Welcome back!</h1>
+      <h1>{{ $t('welcomeBack') }}</h1>
       <form>
         <div class="inputWrapper">
           <input fill="outline" :placeholder="$t('username')" type="text" v-model="email" />
@@ -57,7 +57,10 @@ const login = async () => {
   else {
     loading.value = true;
     try {
-      userStore.logIn(email.value, password.value).then(() => {
+      router.push('/home');
+      loading.value = false;
+      //TODO: Add Logic
+      /*userStore.logIn(email.value, password.value).then(() => {
         loading.value = false;
         router.push('/home');
       }).catch(async () => {
@@ -68,7 +71,7 @@ const login = async () => {
         });
         await toast.present();
         loading.value = false;
-      });
+      });*/
     }
     catch (err) {
       const toast = await toastController.create({
