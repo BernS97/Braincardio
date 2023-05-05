@@ -1,10 +1,17 @@
+import { useUserStore } from "@/pinia/users";
 import HomePage from "@/views/HomePage.vue";
+import LoginPage from "@/views/LoginPage.vue";
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 
 const routes = [
   {
     path: "/",
-    redirect: "/home",
+    redirect: "/login",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: LoginPage,
   },
   {
     path: "/home",
@@ -13,9 +20,22 @@ const routes = [
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-});
+export default function (pinia) {
+  const userStore = useUserStore(pinia);
+  const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes,
+  });
 
-export default router;
+  router.beforeEach(async (to) => {
+    // routes with `meta: { requiresAuth: true }` will check for the users, others won't
+    if (to.fullPath != "/login") {
+      let currentUser = userStore.getUser;
+      if (!currentUser.loggedIn) currentUser = await userStore.fetchUser();
+      // if the user is not logged in, redirect to the login page
+      if (!currentUser.loggedIn) router.push("/login");
+    }
+  });
+
+  return router;
+}
