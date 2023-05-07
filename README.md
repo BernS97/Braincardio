@@ -9,13 +9,20 @@ With this project, we, the makers of Braincard, attempt bring a mobile, cross-de
 
 Happy learning.
 
+## How to contribute.
+
+We use the following branch naming convention:
+
+- features -> story/
+- bugfixes -> bugfix/
+
 ## What tech we use.
 
 - persistence: :fire:Firebase
 - framework: :eyes: vue.js
 - UI elements: :bomb: ionic
 
-## Requirements
+### Packages.
 
 - NodeJS == 14.0.0
 - Ionic == 7.0.2
@@ -26,46 +33,38 @@ Happy learning.
 - Vuefire = 3.1.0
 - Npm == 8
 
-## Git flow
+## How to get started.
 
-We use the following branch naming convention:
-
-- features -> story/
-- bugfixes -> bugfix/
-
-## Start / Debug
-
-First we need install all dependencies with npm. In the root folder call:
+Install all dependencies with npm. 
+In the root folder call:
 
 `npm install`
 
-### Start
+### Start.
 
-Now we can start the project with the following command:
+Start the project with the following command:
 
-#### Web App
+#### Web App.
 
 `npx ionic serve`
 
-Afterwards your code will be availible on the following route:
+Afterwards the code will be availible on the following route:
 `localhost:9100`
 
-#### IOS App on Simulator
+#### IOS App on Simulator.
 
 `npx ionic cap run ios --target=TARGET_UUID  --livereload `
 
-### Debug project
+### Debug project.
 
 Use the source maps in the browser of your chosen, to debug the javascript code.
 
-## Build
+## How to build.
 
-Use the following commands for building development:
+The following commands for building development:
 
-### Development
+### Development.
 
 `npx ionic build && npx cap copy`
-
 `npx cap sync --inline`
-
 `npx cap sync --inline`
