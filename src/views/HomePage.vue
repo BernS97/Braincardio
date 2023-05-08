@@ -9,7 +9,7 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar slot="start">
-          <ion-title size="large">Home</ion-title>
+          <ion-title size="large"></ion-title>
           <ion-buttons slot="primary">
             <ion-button>
               <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>

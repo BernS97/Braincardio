@@ -35,7 +35,7 @@ import {
 } from '@ionic/vue';
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
-import { useUserStore } from '@/pinia/users';
+import { useUserStore } from '@/plugins/pinia/users';
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import RegisterUserModal from "@/components/Login/RegisterUser.vue";
 
@@ -57,10 +57,7 @@ const login = async () => {
   else {
     loading.value = true;
     try {
-      router.push('/home');
-      loading.value = false;
-      //TODO: Add Logic
-      /*userStore.logIn(email.value, password.value).then(() => {
+      userStore.logIn(email.value, password.value).then(() => {
         loading.value = false;
         router.push('/home');
       }).catch(async () => {
@@ -71,7 +68,7 @@ const login = async () => {
         });
         await toast.present();
         loading.value = false;
-      });*/
+      });
     }
     catch (err) {
       const toast = await toastController.create({

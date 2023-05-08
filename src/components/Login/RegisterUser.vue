@@ -33,9 +33,9 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { IonPage, IonContent, IonToolbar, IonButton, toastController, IonHeader, IonTitle } from '@ionic/vue';
-import { useUserStore } from '@/pinia/users';
+import { useUserStore } from '@/plugins/pinia/users';
 
-defineProps(["modalController"]);
+const props = defineProps(["modalController"]);
 const name = ref('');
 const email = ref('');
 const password = ref('');
@@ -53,11 +53,11 @@ const Register = async () => {
     }
     else {
         try {
-            await userStore.register({
-                email: email.value,
-                password: password.value,
-                name: name.value
-            });
+            await userStore.register(
+                email.value,
+                password.value,
+                name.value
+            );
             props.modalController.dismiss();
             const toast = await toastController.create({
                 message: t("userCreated"),

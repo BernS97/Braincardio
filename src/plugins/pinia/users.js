@@ -1,4 +1,4 @@
-//import { auth, db } from "@/plugins/firebase";
+import { auth, db } from "@/plugins/firebase";
 import { useStorage } from "@vueuse/core";
 import {
   browserLocalPersistence,
@@ -9,19 +9,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  limit,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection, limit, query, where } from "firebase/firestore";
 import { defineStore } from "pinia";
-import { isJSDocThisTag } from "typescript";
-import { useDocument } from "vuefire";
+import { useCollection } from "vuefire";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -44,26 +34,26 @@ export const useUserStore = defineStore("user", {
     },
   },
   actions: {
-    async register(params) {
+    async register(email, password, name) {
       // As httpOnly cookies are to be used, do not persist any state client side.
       const response = await createUserWithEmailAndPassword(
         auth,
-        params.email,
-        params.password
+        email,
+        password
       );
       if (response) {
         this.setUser(response.user);
         updateProfile(response.user, {
-          displayName: params.name,
+          displayName: name,
         });
-        this.saveUser(response.user, params.name);
+        this.saveUser(response.user, name);
       } else {
         throw new Error("Unable to register user");
       }
     },
     async saveUser(data, name) {
       const user = {
-        uid: data.uid,
+        authId: data.uid,
         name: name,
         email: data.email,
         image: {
@@ -73,7 +63,7 @@ export const useUserStore = defineStore("user", {
         },
         friends: [],
       };
-      this.users.push(await addDoc(collection(db, "users"), user));
+      await addDoc(collection(db, "users"), user);
     },
     async logIn(email, password) {
       await setPersistence(auth, browserLocalPersistence).then(async () => {
@@ -91,11 +81,13 @@ export const useUserStore = defineStore("user", {
         );
       });
     },
-    async getUserForLogin(uid) {
-      const userQuery = useCollection(
-        query(collection(db, "users"), limit(1), where("uid", "==", uid))
+    async getUserForLogin(authId) {
+      const { data: userQuery, promise } = useCollection(
+        query(collection(db, "users"), limit(1), where("authId", "==", authId))
       );
-      this.user = userQuery.value[0];
+      promise.value.then(() => {
+        this.user = userQuery.value[0];
+      });
     },
     async logOut() {
       await signOut(auth);
@@ -104,7 +96,7 @@ export const useUserStore = defineStore("user", {
       localStorage.clear();
     },
     async fetchUser() {
-      if (this.user.uid) {
+      if (this.user.authId) {
         this.setUserLocalStorage(null);
         this.setLoggedIn(this !== null);
       }
@@ -121,10 +113,7 @@ export const useUserStore = defineStore("user", {
       this.userData = data;
     },
     setUserLocalStorage() {
-      isJSDocThisTag.data = JSON.parse(
-        localStorage.getItem(window.localStorage.key(0))
-      );
-      if (this.userData) this.loggedIn = true;
+      localStorage.setItem("login", this.userData);
     },
   },
 });

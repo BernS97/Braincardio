@@ -1,5 +1,5 @@
 import App from "@/App.vue";
-import createRouter from "@/router";
+import createRouter from "@/plugins/router";
 import { createApp } from "vue";
 
 import { IonicVue } from "@ionic/vue";

@@ -1,4 +1,4 @@
-import { useUserStore } from "@/pinia/users";
+import { useUserStore } from "@/plugins/pinia/users";
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import { createRouter, createWebHistory } from "@ionic/vue-router";
@@ -18,7 +18,7 @@ const routes = [
     name: "Home",
     component: HomePage,
     meta: {
-      requiresAuth: false,
+      requiresAuth: true,
     },
   },
 ];
