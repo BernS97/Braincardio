@@ -26,7 +26,7 @@ import "@ionic/vue/css/text-alignment.css";
 import "@ionic/vue/css/text-transformation.css";
 
 /* Theme variables */
-import "./theme/variables.css";
+import "@/assets/styles/variables.css";
 
 const i18n = createI18n({
   locale: "en",

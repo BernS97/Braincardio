@@ -1,7 +1,7 @@
 <template>
   <ion-page ref="page" id="login">
     <div id="logo">
-      <img src="public/logo.png" alt="logo">
+      <img src="@/assets/images/logo.png" alt="logo">
     </div>
     <ion-content :scroll-y="false">
       <h1>{{ $t('welcomeBack') }}</h1>
@@ -12,7 +12,7 @@
         <div class="inputWrapper">
           <input fill="outline" :placeholder="$t('password')" type="password" v-model="password" />
         </div>
-        <ion-button type="button" @click="login" color="primary" expand="block">Sign In</ion-button>
+        <ion-button type="button" @click="login" color="primary" expand="block">{{ $t('signIn') }}</ion-button>
       </form>
       <fieldset class="hr">
         <legend align="center">{{ $t('or') }}</legend>

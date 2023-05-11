@@ -1,25 +1,40 @@
+import TabsPage from "@/components/Tabs/TabsPage.vue";
 import { useUserStore } from "@/plugins/pinia/users";
+import DecksPage from "@/views/DecksPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
+import ProfilePage from "@/views/ProfilePage.vue";
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 
 const routes = [
-  {
-    path: "/",
-    redirect: "/login",
-  },
   {
     path: "/login",
     name: "Login",
     component: LoginPage,
   },
   {
-    path: "/home",
-    name: "Home",
-    component: HomePage,
+    path: "/",
+    component: TabsPage,
     meta: {
       requiresAuth: true,
     },
+    children: [
+      {
+        path: "home",
+        name: "Home",
+        component: HomePage,
+      },
+      {
+        path: "decks",
+        name: "Decks",
+        component: DecksPage,
+      },
+      {
+        path: "profile",
+        name: "Profile",
+        component: ProfilePage,
+      },
+    ],
   },
 ];
 
