@@ -19,5 +19,8 @@
   "email": "Email",
   "or": "Or",
   "loggingIn": "Logging in",
-  "welcomeBack": "Welcome back!"
+  "welcomeBack": "Welcome back!",
+  "decks": "Decks",
+  "profile": "Profile",
+  "home": "Home"
 }

@@ -2,14 +2,14 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>{{ $t('home') }}</ion-title>
+        <ion-title>{{ $t('decks') }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar slot="start">
-          <ion-title size="large">{{ $t('home') }}</ion-title>
+          <ion-title size="large">{{ $t('decks') }}</ion-title>
           <ion-buttons slot="primary">
             <ion-button>
               <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>

@@ -1,7 +1,7 @@
 <template>
   <ion-page ref="page" id="login">
     <div id="logo">
-      <img src="public/logo.png" alt="logo">
+      <img src="@/assets/images/logo.png" alt="logo">
     </div>
     <ion-content :scroll-y="false">
       <h1>{{ $t('welcomeBack') }}</h1>
