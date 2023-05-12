@@ -1,0 +1,23 @@
+{
+  "firebase": {
+    "auth/email-already-in-use": "Email already in use!",
+    "auth/weak-password": "Password should be at least 6 characters!",
+    "auth/invalid-email": "Enter a valid email!"
+  },
+  "userCreated": "Resgistered user!",
+  "username": "Username",
+  "password": "Password",
+  "alreadyAnAccount": "Already have an account?",
+  "register": "Register",
+  "noUser": "Dont have an account?",
+  "registerUser": "Register user",
+  "signUp": "Sign up",
+  "signIn": "Sign in",
+  "logout": "Logout",
+  "emailErrorText": "Invalid email",
+  "enterEmail": "Enter email",
+  "email": "Email",
+  "or": "Or",
+  "loggingIn": "Logging in",
+  "welcomeBack": "Welcome back!"
+}
