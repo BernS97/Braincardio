@@ -16,7 +16,7 @@
                 <div class="inputWrapper">
                     <input fill="outline" :placeholder="$t('password')" type="password" v-model="password" />
                 </div>
-                <ion-button type="button" @click="Register" color="primary" expand="block">Register</ion-button>
+                <ion-button type="button" @click="Register" color="primary" expand="block">{{ $t('register') }}</ion-button>
             </form>
             <fieldset class="hr">
                 <legend align="center">{{ $t('or') }}</legend>
