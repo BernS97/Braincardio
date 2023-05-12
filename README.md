@@ -1,6 +1,7 @@
 # BrainCard.
 
-[logo] "BrainCardio Logo" //needs fix once merged to main.
+<img src="https://raw.githubusercontent.com/BernS97/Braincardio/main/public/appIcon.png" 
+     width="250" height="250" />
 
 ## About.
 
