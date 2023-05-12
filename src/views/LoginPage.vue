@@ -12,13 +12,13 @@
         <div class="inputWrapper">
           <input fill="outline" :placeholder="$t('password')" type="password" v-model="password" />
         </div>
-        <ion-button type="button" @click="login" color="primary" expand="block">Sign In</ion-button>
+        <ion-button type="button" @click="login" color="primary" expand="block">{{ $t('signIn') }}</ion-button>
       </form>
       <fieldset class="hr">
         <legend align="center">{{ $t('or') }}</legend>
       </fieldset>
       <div id="signUp">
-        {{ $t('register') }} <a @click="openModal">{{ $t('signUp') }}</a>
+        {{ $t('noUser') }} <a @click="openModal">{{ $t('signUp') }}</a>
       </div>
     </ion-content>
   </ion-page>
