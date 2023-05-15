@@ -2,7 +2,7 @@
     <ion-page>
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
-            <ion-tab-bar class="translucent" slot="bottom">
+            <ion-tab-bar class="translucent" :translucent="true" slot="bottom">
                 <ion-tab-button tab="home" href="/home">
                     <ion-icon :icon="archive" />
                     <ion-label>{{ t('home') }}</ion-label>

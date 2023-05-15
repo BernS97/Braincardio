@@ -5,7 +5,6 @@
         <ion-title>{{ $t('profile') }}</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar slot="start">
@@ -23,6 +22,9 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
+    <div class="mainEmoji">
+      <p>&#128512;</p>
+    </div>
     </ion-content>
   </ion-page>
 </template>
@@ -30,11 +32,21 @@
 <script setup>
 import { IonAvatar, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons } from '@ionic/vue';
 import { notificationsOutline } from 'ionicons/icons';
+
+
 </script>
 
 <style scoped>
+
 ion-avatar {
   width: 32px;
   height: 32px;
+}
+
+.mainEmoji {
+  position: absolute;
+  top: 20%; 
+  left: 40%;
+  font-size: 75px;
 }
 </style>

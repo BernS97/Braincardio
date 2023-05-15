@@ -93,9 +93,6 @@ const openModal = async () => {
 }
 </script>
 <style lang="scss">
-#login {
-  background: white;
-}
 
 #login #logo {
   height: 200px;
