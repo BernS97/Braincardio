@@ -22,8 +22,12 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-    <div class="mainEmoji">
-      <p>&#128512;</p>
+    <div class="emojiArea">
+      <div class="emojiCircle">
+        <p class="emoji">
+            &#128512;
+        </p>
+      </div>
     </div>
     </ion-content>
   </ion-page>
@@ -43,10 +47,32 @@ ion-avatar {
   height: 32px;
 }
 
-.mainEmoji {
-  position: absolute;
-  top: 20%; 
-  left: 40%;
-  font-size: 75px;
+.emojiArea {
+  position: relative;
+  height: 25%; 
+  width: 100%; 
+  border: 1px solid green;
 }
+.emojiCircle {
+  position: absolute;
+  height: 50%; 
+  width: 50%; 
+  top: 0; 
+  right: 0; 
+  left: 0; 
+  bottom: 0;
+  margin: auto;
+  border: 1px solid green;
+}
+.emoji {
+  position: absolute;
+  text-align: center;
+  top: 0; 
+  right: 0; 
+  left: 0; 
+  bottom: 0;
+  margin: auto;
+  border: 1px solid green;
+}
+
 </style>
