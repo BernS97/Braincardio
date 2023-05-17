@@ -28,6 +28,14 @@
             &#128512;
         </p>
       </div>
+      <div class="userData">
+        <h1>
+        FelipeB
+      </h1>
+      <h2>
+        albertohase@gmx.de
+      </h2>
+      </div>
     </div>
     </ion-content>
   </ion-page>
@@ -48,31 +56,24 @@ ion-avatar {
 }
 
 .emojiArea {
-  position: relative;
-  height: 25%; 
-  width: 100%; 
-  border: 1px solid green;
+
 }
 .emojiCircle {
-  position: absolute;
-  height: 50%; 
-  width: 50%; 
-  top: 0; 
-  right: 0; 
-  left: 0; 
-  bottom: 0;
+  height: 200px; 
+  width: 200px; 
   margin: auto;
-  border: 1px solid green;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  background: linear-gradient(to right, #373b44, #4286f4);
 }
 .emoji {
-  position: absolute;
   text-align: center;
-  top: 0; 
-  right: 0; 
-  left: 0; 
-  bottom: 0;
   margin: auto;
-  border: 1px solid green;
+  font-size: 75px;
+  padding: 25%;
 }
 
+.userData {
+  text-align: center;
+}
 </style>
