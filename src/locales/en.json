@@ -22,5 +22,10 @@
   "welcomeBack": "Welcome back!",
   "decks": "Decks",
   "profile": "Profile",
-  "home": "Home"
+  "home": "Home",
+  "language": "Language",
+  "english": "English",
+  "german": "German",
+  "spanish": "Spanish",
+  "friends": "Friends"
 }

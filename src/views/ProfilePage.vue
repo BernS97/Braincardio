@@ -1,27 +1,6 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-title>{{ $t('profile') }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <ion-page style="--background: green">
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar slot="start">
-          <ion-title size="large">{{ $t('profile') }}</ion-title>
-          <ion-buttons slot="primary">
-            <ion-button>
-              <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>
-            </ion-button>
-            <ion-button>
-              <ion-avatar>
-                <img alt="Silhouette of a person's head"
-                  src="https://erp-information.de/wp-content/uploads/2022/10/breitsch.png" />
-              </ion-avatar>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
     <div class="emojiArea">
       <div class="emojiCircle">
         <p class="emoji">
@@ -29,14 +8,28 @@
         </p>
       </div>
       <div class="userData">
-        <h1>
-        FelipeB
-      </h1>
-      <h2>
-        albertohase@gmx.de
-      </h2>
+        <h1>FelipeB</h1>
+        <h2>albertohase@gmx.de</h2>
       </div>
     </div>
+      <ion-list :inset="true">
+        <ion-item>
+          <ion-toggle :translucent="true">Focus Mode</ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-select value="en" :label="$t('language')" label-placement="fixed" :aria-label="$t('language')">
+            <ion-select-option value="en">{{ $t('english') }}</ion-select-option>
+            <ion-select-option value="de">{{ $t('german') }}</ion-select-option>
+            <ion-select-option value="es">{{ $t('spanish') }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{ $t('friends') }}</ion-label>
+          <user-avatars-list>
+          
+          </user-avatars-list>
+        </ion-item>
+    </ion-list>
     </ion-content>
   </ion-page>
 </template>
@@ -44,7 +37,7 @@
 <script setup>
 import { IonAvatar, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons } from '@ionic/vue';
 import { notificationsOutline } from 'ionicons/icons';
-
+import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
 
 </script>
 
@@ -56,7 +49,7 @@ ion-avatar {
 }
 
 .emojiArea {
-
+  margin-top: 40px;
 }
 .emojiCircle {
   height: 200px; 
