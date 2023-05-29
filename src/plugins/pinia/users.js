@@ -9,9 +9,16 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { addDoc, collection, limit, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  limit,
+  query,
+  where,
+} from "firebase/firestore";
 import { defineStore } from "pinia";
-import { useCollection } from "vuefire";
+import { useCollection, useDocument } from "vuefire";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -22,6 +29,7 @@ export const useUserStore = defineStore("user", {
       name: null,
       email: null,
       image: null,
+      level: null,
       friends: [],
     }),
     userData: null,
@@ -58,10 +66,11 @@ export const useUserStore = defineStore("user", {
         name: name,
         email: data.email,
         image: {
-          emoji: 0x1f600,
+          emoji: "😀",
           background:
             "linear-gradient(136.78deg, rgb(255, 215, 178) 10.55%, rgb(252, 165, 191) 85.16%)",
         },
+        level: 1,
         friends: [],
       };
       await addDoc(collection(db, "users"), user);
@@ -106,6 +115,14 @@ export const useUserStore = defineStore("user", {
       } else {
         this.setUser(null);
       }
+    },
+    async fetchLoggedInUserProfile() {
+      const { data: user, promise } = useDocument(
+        doc(db, "users", this.user.id)
+      );
+      await promise.value;
+      this.user = user;
+      return this.user;
     },
     setLoggedIn(value) {
       this.loggedIn = value;
