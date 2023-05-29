@@ -1,5 +1,7 @@
 import TabsPage from "@/components/Tabs/TabsPage.vue";
 import { useUserStore } from "@/plugins/pinia/users";
+import CreateEditDeckPage from "@/views/Decks/CreateEditDeckPage.vue";
+import DeckDetailPage from "@/views/Decks/DeckDetailPage.vue";
 import DecksPage from "@/views/DecksPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
@@ -35,6 +37,32 @@ const routes = [
         component: ProfilePage,
       },
     ],
+  },
+  {
+    path: "/decks/:id",
+    name: "DeckDetailPage",
+    props: true,
+    component: DeckDetailPage,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/decks/create",
+    name: "CreateDeckPage",
+    component: CreateEditDeckPage,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/decks/edit/:id",
+    name: "EditDetailPage",
+    props: true,
+    component: CreateEditDeckPage,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 

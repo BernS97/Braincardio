@@ -17,6 +17,7 @@ export const useUserStore = defineStore("user", {
   state: () => ({
     loggedIn: false,
     user: useStorage("user", {
+      id: null,
       authId: null,
       name: null,
       email: null,
@@ -86,7 +87,7 @@ export const useUserStore = defineStore("user", {
         query(collection(db, "users"), limit(1), where("authId", "==", authId))
       );
       promise.value.then(() => {
-        this.user = userQuery.value[0];
+        this.user = { ...userQuery.value[0] };
       });
     },
     async logOut() {
