@@ -1,16 +1,17 @@
 <template>
     <div class="wrapper">
-        <div class="avatar" v-for="(user, index) in slicedUsers" key="user.id" :style="{ backgroundImage: `url(${user.img})`, left: `-${index * 15}px` }">
-        </div>
+        <user-avatar class="avatar small" v-for="(user, index) in slicedUsers" :userProfile="user"
+            :style="{ left: `-${index * 15}px` }" />
         <div class="avatar additionalUsers" v-if="users.length > 3">
             +{{ users.length - slicedUsers.length }}
         </div>
-    </div>>
+    </div>
 </template> 
 
 <script setup>
-const props = defineProps(["users"]); 
-const slicedUsers = props.users.slice(0,3);
+import UserAvatar from '@/components/Base/UserAvatar.vue';
+const props = defineProps(["users"]);
+const slicedUsers = props.users.slice(0, 3);
 
 </script>
 
@@ -18,7 +19,9 @@ const slicedUsers = props.users.slice(0,3);
 .wrapper {
     position: relative;
     display: flex;
-    margin-top: 5px;
+    right: -20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatar {
@@ -30,9 +33,10 @@ const slicedUsers = props.users.slice(0,3);
     position: relative;
 }
 
-.additionalUsers{
+.additionalUsers {
     padding: 5%;
     background: black;
     left: -45px;
+    color: white;
 }
 </style>
