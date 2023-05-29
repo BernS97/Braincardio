@@ -19,7 +19,7 @@
             <ion-select-option value="es">{{ $t('spanish') }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item button>
           <ion-label>{{ $t('friends') }}</ion-label>
           <user-avatars-list v-if="userProfile" :users="userProfile.friends">
           </user-avatars-list>

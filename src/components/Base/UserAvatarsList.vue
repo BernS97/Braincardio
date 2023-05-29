@@ -5,7 +5,7 @@
         <div class="avatar additionalUsers" v-if="users.length > 3">
             +{{ users.length - slicedUsers.length }}
         </div>
-    </div>>
+    </div>
 </template> 
 
 <script setup>
