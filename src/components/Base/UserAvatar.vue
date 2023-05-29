@@ -1,26 +1,41 @@
 <template>
-    <div class="userBackground" :style="{ backgroundImage: userProfile.image.background }">
-        <p class="userEmoji">{{ userProfile.image.emoji }}</p>
-    </div>
+  <div v-if="userProfile" class="userBackground" :style="{ backgroundImage: userProfile.image.background }">
+    <div class="userEmoji">{{ userProfile.image.emoji }}</div>
+    <ion-badge v-if="badge">
+      {{ $t('level') }} {{ userProfile.level }}
+    </ion-badge>
+  </div>
 </template>
 
-<script>
-const props = defineProps("userProfile");
+<script setup>
+
+const props = defineProps(["userProfile", "badge"]);
 </script>
 
-<style>
+<style lang="scss">
 .userBackground {
-  height: 200px; 
-  width: 200px; 
+  height: 200px;
+  width: 200px;
   margin: auto;
   border: 1px solid #ddd;
   border-radius: 50%;
 }
 
 .userEmoji {
-  text-align: center;
-  margin: auto;
   font-size: 75px;
-  padding: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.small .userEmoji {
+  font-size: 25px;
+}
+
+ion-badge {
+  position: relative;
+  left: 160px;
+  bottom: 160px;
 }
 </style>

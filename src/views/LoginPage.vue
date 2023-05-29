@@ -1,5 +1,5 @@
 <template>
-  <ion-page ref="page" id="login">
+  <ion-page ref="page" id="login" v-if="route.fullPath == '/login'">
     <div id="logo">
       <img src="@/assets/images/logo.png" alt="logo">
     </div>
@@ -38,7 +38,9 @@ import { useRouter } from "vue-router";
 import { useUserStore } from '@/plugins/pinia/users';
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import RegisterUserModal from "@/components/Login/RegisterUser.vue";
+import { useRoute } from 'vue-router';
 
+const route = useRoute()
 const userStore = useUserStore();
 const router = useRouter();
 const page = ref();
@@ -93,7 +95,6 @@ const openModal = async () => {
 }
 </script>
 <style lang="scss">
-
 #login #logo {
   height: 200px;
   width: 200px;
