@@ -1,7 +1,7 @@
 <template>
   <ion-page style="--background: green">
     <ion-content :fullscreen="true">
-      <div class="emojiArea">
+      <div class="userAvatarArea">
         <user-avatar :userProfile="userProfile" :badge="true" />
       </div>
       <div class="userData">
@@ -19,7 +19,7 @@
             <ion-select-option value="es">{{ $t('spanish') }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item button>
           <ion-label>{{ $t('friends') }}</ion-label>
           <user-avatars-list v-if="userProfile" :users="userProfile.friends">
           </user-avatars-list>
@@ -42,7 +42,6 @@ const userStore = useUserStore();
 const userProfile = ref('');
 const router = useRouter();
 
-
 onBeforeMount(async () => {
   userProfile.value = await userStore.fetchLoggedInUserProfile();
 });
@@ -59,7 +58,7 @@ ion-avatar {
   height: 32px;
 }
 
-.emojiArea {
+.userAvatarArea {
   margin-top: 40px;
 }
 

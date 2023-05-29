@@ -1,7 +1,7 @@
 <template>
-  <div v-if="userProfile" class="userBackground" :style="{ backgroundImage: userProfile.image.background }">
-    <div class="userEmoji">{{ userProfile.image.emoji }}</div>
-    <ion-badge class="levelBadge" v-if="badge">
+  <div class="userAvatarBackground" :style="{ backgroundImage: userProfile.image.background }">
+    <div class="userAvatarEmoji">{{ userProfile.image.emoji }}</div>
+    <ion-badge v-if="badge">
       {{ $t('level') }} {{ userProfile.level }}
     </ion-badge>
   </div>
@@ -10,10 +10,11 @@
 <script setup>
 
 const props = defineProps(["userProfile", "badge"]);
+
 </script>
 
 <style lang="scss">
-.userBackground {
+.userAvatarBackground {
   height: 200px;
   width: 200px;
   margin: auto;
@@ -21,7 +22,7 @@ const props = defineProps(["userProfile", "badge"]);
   border-radius: 50%;
 }
 
-.userEmoji {
+.userAvatarEmoji {
   font-size: 75px;
   display: flex;
   align-items: center;
@@ -29,11 +30,11 @@ const props = defineProps(["userProfile", "badge"]);
   height: 100%;
 }
 
-.small .userEmoji {
+.small .userAvatarEmoji {
   font-size: 25px;
 }
 
-ion-badge.levelBadge {
+ion-badge {
   position: relative;
   left: 160px;
   bottom: 160px;
