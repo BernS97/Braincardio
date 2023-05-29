@@ -2,7 +2,7 @@
   <ion-page style="--background: green">
     <ion-content :fullscreen="true">
       <div class="userAvatarArea">
-        <user-avatar :userProfile="userProfile" :badge="true" />
+        <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" />
       </div>
       <div class="userData">
         <h1>{{ userProfile.name }}</h1>

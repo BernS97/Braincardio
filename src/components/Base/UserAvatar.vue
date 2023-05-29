@@ -1,7 +1,7 @@
 <template>
-  <div class="userAvatarBackground" :style="{ backgroundImage: userProfile.image.background }">
+  <div v-if="userProfile.image" class="userAvatarBackground" :style="{ backgroundImage: userProfile.image.background }">
     <div class="userAvatarEmoji">{{ userProfile.image.emoji }}</div>
-    <ion-badge v-if="badge">
+    <ion-badge class="levelBadge" v-if="badge">
       {{ $t('level') }} {{ userProfile.level }}
     </ion-badge>
   </div>
@@ -34,7 +34,7 @@ const props = defineProps(["userProfile", "badge"]);
   font-size: 25px;
 }
 
-ion-badge {
+ion-badge.levelBadge {
   position: relative;
   left: 160px;
   bottom: 160px;

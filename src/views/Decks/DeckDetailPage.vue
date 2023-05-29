@@ -50,13 +50,17 @@
         </ion-item>
       </ion-list>
       <ion-list :inset="true">
-        <ion-list-header>
+        <ion-list-header @click="collapseBody">
           <ion-label>{{ $t('users') }}</ion-label>
+          <ion-icon class="collapseIcon" v-if="usersCollapsed" :icon="chevronUpOutline"></ion-icon>
+          <ion-icon class="collapseIcon" v-if="!usersCollapsed" :icon="chevronDownOutline"></ion-icon>
         </ion-list-header>
-        <ion-item v-for="user in deck.users" :key="user.id">
-          <user-avatar class="small" :userProfile="user" />
-          {{ user.name }}
-        </ion-item>
+        <div v-if="!usersCollapsed">
+          <ion-item class="userList" v-for="user in deck.users" :key="user.id" v-if="deck.users">
+            <user-avatar slot="start" class="small avatar" :userProfile="user" />
+            <ion-label>{{ user.name }}</ion-label>
+          </ion-item>
+        </div>
       </ion-list>
       <ion-list :inset="true">
         <ion-list-header>
@@ -80,16 +84,22 @@ import { useRouter } from "vue-router";
 import { db } from '@/plugins/firebase';
 import { useDocument } from 'vuefire';
 import { doc } from 'firebase/firestore';
+import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
 import UserAvatar from '@/components/Base/UserAvatar.vue';
 
 const props = defineProps(["id"]);
 const deck = useDocument(doc(db, "decks", props.id));
 const searchCards = ref(null);
+const usersCollapsed = ref(false);
 const router = useRouter();
 const handleChange = (event) => {
   const search = event.target.value.toLowerCase();
   searchCards.value = deck.value.cards.filter(d => d.question.toLowerCase().indexOf(search) > -1);
 };
+
+const collapseBody = () => {
+  usersCollapsed.value = !usersCollapsed.value
+}
 
 watch(deck, () => {
   searchCards.value = deck.value.cards
@@ -99,5 +109,14 @@ watch(deck, () => {
 <style>
 .header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.toolbar-searchbar {
   display: none;
+}
+
+.userList ion-label {
+  margin-left: 15px;
+}
+
+.collapseIcon {
+  margin-bottom: 6px;
+  margin-right: 15px;
 }
 </style>
