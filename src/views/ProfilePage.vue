@@ -2,9 +2,8 @@
   <ion-page style="--background: green">
     <ion-content :fullscreen="true">
     <div class="emojiArea">
-      <div class="emojiCircle" :style="{ backgroundImage: userProfile.image.background }">
-        <p class="emoji">{{ userProfile.image.emoji }}</p>
-      </div>
+      <user-avatar :userProfile="userProfile">
+      </user-avatar>
       <div class="userData">
         <h1>{{ userProfile.name }}</h1>
         <h2>{{ userProfile.email }}</h2>
@@ -36,6 +35,7 @@
 import { IonAvatar, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons } from '@ionic/vue';
 import { notificationsOutline } from 'ionicons/icons';
 import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
+import UserAvatar from '@/components/Base/UserAvatar.vue';
 import { useUserStore } from '@/plugins/pinia/users';
 import { useRouter } from 'vue-router';
 
@@ -69,11 +69,9 @@ const logOut = () => {
       userStore.logOut();
       router.push('/login');
     }
-
 </script>
 
 <style scoped>
-
 ion-avatar {
   width: 32px;
   height: 32px;
@@ -81,19 +79,6 @@ ion-avatar {
 
 .emojiArea {
   margin-top: 40px;
-}
-.emojiCircle {
-  height: 200px; 
-  width: 200px; 
-  margin: auto;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-}
-.emoji {
-  text-align: center;
-  margin: auto;
-  font-size: 75px;
-  padding: 25%;
 }
 
 .userData {
