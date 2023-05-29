@@ -9,12 +9,16 @@
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            Users
+            <ion-item>
+                <ion-label>{{ $t('users') }}</ion-label>
+                <user-avatars-list :users="deck.users" />
+            </ion-item>
         </ion-card-content>
     </ion-card>
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
+import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
 defineProps(["deck"]);
 const router = useRouter();
 </script>

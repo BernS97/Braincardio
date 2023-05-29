@@ -19,7 +19,7 @@
           :placeholder="$t('search')"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" v-if="deck">
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">
@@ -53,6 +53,10 @@
         <ion-list-header>
           <ion-label>{{ $t('users') }}</ion-label>
         </ion-list-header>
+        <ion-item v-for="user in deck.users" :key="user.id">
+          <user-avatar class="small" :userProfile="user" />
+          {{ user.name }}
+        </ion-item>
       </ion-list>
       <ion-list :inset="true">
         <ion-list-header>
@@ -76,6 +80,7 @@ import { useRouter } from "vue-router";
 import { db } from '@/plugins/firebase';
 import { useDocument } from 'vuefire';
 import { doc } from 'firebase/firestore';
+import UserAvatar from '@/components/Base/UserAvatar.vue';
 
 const props = defineProps(["id"]);
 const deck = useDocument(doc(db, "decks", props.id));
