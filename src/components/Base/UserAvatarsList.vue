@@ -39,4 +39,5 @@ const slicedUsers = props.users.slice(0, 3);
     left: -45px;
     color: white;
 }
+
 </style>

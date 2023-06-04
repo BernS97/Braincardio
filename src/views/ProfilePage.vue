@@ -19,10 +19,24 @@
             <ion-select-option value="es">{{ $t('spanish') }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item button>
+        <ion-item button id="open-modal" expand="block">
           <ion-label>{{ $t('friends') }}</ion-label>
-          <user-avatars-list v-if="userProfile" :users="userProfile.friends">
-          </user-avatars-list>
+          <user-avatars-list v-if="userProfile" :users="userProfile.friends"></user-avatars-list>
+            <ion-modal ref="modal" trigger="open-modal">
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button @click="cancel">Cancel</ion-button>
+                  </ion-buttons>
+                  <ion-title>Friends</ion-title>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-item v-for="(friend) in userProfile.friends">
+                 *add avatar here {{ friend.name }} and here the level badge
+                </ion-item>
+              </ion-content>
+            </ion-modal>
         </ion-item>
       </ion-list>
       <ion-button class="logoutButton" expand="block" @click="logOut">Logout</ion-button>
@@ -31,8 +45,8 @@
 </template>
 
 <script setup>
-import { IonContent, IonPage, IonButton } from '@ionic/vue';
-import { onBeforeMount, ref } from 'vue';
+import { IonContent, IonPage, IonButton, IonItem, IonButtons, IonTitle, IonModal, modalController, IonToolbar, IonHeader } from '@ionic/vue';
+import { defineComponent, onBeforeMount, ref } from 'vue';
 import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
 import UserAvatar from '@/components/Base/UserAvatar.vue';
 import { useUserStore } from '@/plugins/pinia/users';
@@ -49,6 +63,10 @@ onBeforeMount(async () => {
 const logOut = () => {
   userStore.logOut();
   router.push('/login');
+};
+
+const cancel = () => {
+  return modalController.dismiss(null, 'cancel');
 }
 </script>
 
