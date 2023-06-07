@@ -10,10 +10,20 @@
           <ion-button :strong="true" @click="addCard">{{ $t('add') }}</ion-button>
         </ion-buttons>
       </ion-toolbar>
+      <ion-toolbar>
+        <ion-segment :value="selectedSegment" @ionChange="selectedSegment = $event.detail.value;">
+          <ion-segment-button value="question">
+            <ion-label>{{ $t('question') }}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="answer">
+            <ion-label>{{ $t('answer') }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <card-editor v-model="question" :placeholder="$t('question')" />
-      <card-editor v-model="answer" :placeholder="$t('answer')" />
+      <card-editor v-show="selectedSegment == 'question'" v-model="question" :placeholder="$t('question')" />
+      <card-editor v-show="selectedSegment == 'answer'" v-model="answer" :placeholder="$t('answer')" />
     </ion-content>
   </ion-modal>
 </template>
@@ -26,6 +36,9 @@ import {
   IonHeader,
   IonContent,
   IonToolbar,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
   IonTitle,
   toastController
 } from '@ionic/vue';
@@ -36,6 +49,7 @@ const emit = defineEmits(["added"]);
 const props = defineProps(["trigger"]);
 const question = ref('');
 const answer = ref('');
+const selectedSegment = ref('question');
 const modal = ref(null);
 const cancel = () => {
   modal.value.$el.dismiss(null, 'cancel');

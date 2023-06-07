@@ -17,6 +17,7 @@ const routes = [
   {
     path: "/",
     component: TabsPage,
+    redirect: "/home",
     meta: {
       requiresAuth: true,
     },

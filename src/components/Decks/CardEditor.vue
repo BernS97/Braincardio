@@ -83,6 +83,6 @@ ion-card.card-editor ion-card-content.card-content-ios {
 }
 
 ion-card.card-editor {
-    height: 30%;
+    height: 80%;
 }
 </style>

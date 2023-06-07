@@ -96,7 +96,9 @@ export const useUserStore = defineStore("user", {
         query(collection(db, "users"), limit(1), where("authId", "==", authId))
       );
       promise.value.then(() => {
-        this.user = { ...userQuery.value[0] };
+        const user = { ...userQuery.value[0] };
+        user.id = userQuery.value[0].id;
+        this.user = user;
       });
     },
     async logOut() {
