@@ -8,7 +8,9 @@
 </template>
 
 <script setup>
-
+import {
+  IonBadge
+} from '@ionic/vue';
 const props = defineProps(["userProfile", "badge"]);
 
 </script>

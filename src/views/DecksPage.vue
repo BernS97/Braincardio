@@ -38,21 +38,30 @@
 </template>
 
 <script setup>
-import { IonAvatar, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonFab, IonFabButton } from '@ionic/vue';
-import { ref } from "vue";
+import { IonAvatar, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonFab, IonFabButton, IonSearchbar } from '@ionic/vue';
+import { ref, watch } from "vue";
 import { notificationsOutline, add } from 'ionicons/icons';
 import { useCollection } from "vuefire";
-import { collection } from "firebase/firestore";
 import { db } from "@/plugins/firebase.js"
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/plugins/pinia/users';
+import {
+  collection,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import DeckCard from '@/components/Decks/DeckCard.vue';
 
 const router = useRouter();
-const searchDecks = ref([]);
-const { data: decks, promise } = useCollection(collection(db, 'decks'));
-promise.value.then(() => {
-  searchDecks.value = [...decks.value];
-})
+const userStore = useUserStore();
+const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
+const decks = useCollection(query(collection(db, "decks"), where("users", "array-contains", currentUserDoc)));
+const searchDecks = ref(decks.value);
+
+watch(decks, () => {
+  searchDecks.value = decks.value;
+});
 
 const handleSearch = (search) => {
   searchDecks.value = decks.value.filter(d => d.name.toLowerCase().indexOf(search) > -1);

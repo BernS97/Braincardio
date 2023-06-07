@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonListHeader, IonButton, IonButtons, IonBackButton, IonSearchbar } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonListHeader, IonButton, IonButtons, IonBackButton, IonSearchbar, IonIcon } from '@ionic/vue';
 import { watch, ref } from 'vue';
 import { useRouter } from "vue-router";
 import { db } from '@/plugins/firebase';
@@ -118,5 +118,23 @@ watch(deck, () => {
 .collapseIcon {
   margin-bottom: 6px;
   margin-right: 15px;
+}
+
+.slide-enter-active {
+  animation: slide-in 1s;
+}
+
+.slide-leave-active {
+  animation: slide-in reverse 1s;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(100px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 </style>

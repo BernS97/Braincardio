@@ -44,6 +44,7 @@
   "addCards-suf": "button!",
   "addUsers-pre": "Please add users with the",
   "addUsers-suf": "button!",
+  "addUsers": "Add users",
   "createDeck": "Create Deck",
   "createCard": "Create Card",
   "question": "Question",

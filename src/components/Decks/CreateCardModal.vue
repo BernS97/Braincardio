@@ -12,17 +12,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-list :inset="true">
-        <ion-item>
-          <ion-textarea :label="$t('question')" label-placement="stacked" ref="input" type="text" :auto-grow="true"
-            :placeholder="$t('question')" @ionInput="question = $event.target.value;" :value="question"></ion-textarea>
-        </ion-item>
-        <ion-item>
-          <ion-textarea :label="$t('answer')" label-placement="stacked" ref="input" type="text" :auto-grow="true"
-            :placeholder="$t('answer')" @ionInput=" answer = $event.target.value;" :value="answer"></ion-textarea>
-        </ion-item>
-      </ion-list>
-
+      <card-editor v-model="question" :placeholder="$t('question')" />
+      <card-editor v-model="answer" :placeholder="$t('answer')" />
     </ion-content>
   </ion-modal>
 </template>
@@ -36,12 +27,10 @@ import {
   IonContent,
   IonToolbar,
   IonTitle,
-  IonItem,
-  IonTextarea,
-  IonList,
   toastController
 } from '@ionic/vue';
 import { ref } from 'vue';
+import CardEditor from '@/components/Decks/CardEditor.vue';
 
 const emit = defineEmits(["added"]);
 const props = defineProps(["trigger"]);
@@ -69,13 +58,25 @@ const addCard = async function () {
     });
     question.value = '';
     answer.value = '';
+    var list = document.getElementsByClassName("ql-editor");
+    for (let item of list) {
+      item.innerHTML = '';
+    }
     const toast = await toastController.create({
       message: 'Card created!',
       duration: 3000,
-      color: 'dark'
+      color: 'dark',
     });
 
     await toast.present();
   }
 };
 </script>
+<style>
+ion-content.ion-padding {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+</style>

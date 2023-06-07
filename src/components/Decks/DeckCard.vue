@@ -17,6 +17,15 @@
     </ion-card>
 </template>
 <script setup>
+import {
+    IonCard,
+    IonCardContent,
+    IonCardTitle,
+    IonCardHeader,
+    IonBadge,
+    IonItem,
+    IonLabel,
+} from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
 defineProps(["deck"]);

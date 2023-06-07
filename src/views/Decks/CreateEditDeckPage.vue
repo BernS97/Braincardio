@@ -33,7 +33,7 @@
             :placeholder="$t('lecturerPlaceholder')" @ionInput=" deck.lecturer = $event.target.value;" />
         </ion-item>
       </ion-list>
-      <deck-users :deck="deck" @added="addUsers" />
+      <deck-users v-if="!loading" :deck="deck" @added="addUsers" @removed="removeUser" />
       <ion-list :inset="true">
         <ion-list-header>
           <ion-label>{{ $t('cards') }}</ion-label>
@@ -41,11 +41,11 @@
             <ion-icon :icon="addOutline"></ion-icon>
           </ion-button>
         </ion-list-header>
-        <div v-if="deck.cards.length > 0">
-          <ion-item-sliding v-for="(  card, idx  ) in   deck.cards  " :key="card">
+        <div v-if="deck?.cards?.length > 0">
+          <ion-item-sliding v-for="(  card, idx  ) in   deck?.cards  " :key="card">
             <ion-item>
               <ion-label>
-                <div v-html="card.question"></div>
+                <div v-html="card?.question"></div>
               </ion-label>
             </ion-item>
 
@@ -82,32 +82,37 @@ import {
   IonBackButton,
   IonIcon,
   IonInput,
-  modalController,
   toastController,
 } from '@ionic/vue';
 import { addOutline } from 'ionicons/icons';
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import { addDoc, updateDoc, collection, doc } from 'firebase/firestore';
 import { useRouter } from 'vue-router';
 import { db } from '@/plugins/firebase';
 import { useUserStore } from '@/plugins/pinia/users';
 import CreateCardModal from "@/components/Decks/CreateCardModal.vue";
+import DeckUsers from "@/components/Decks/DeckUsers.vue";
 import { useDocument } from 'vuefire';
 
 const props = defineProps(["id"]);
 const userStore = useUserStore();
 const router = useRouter();
 const page = ref();
+const loading = ref(false);
 const deck = props.id ? useDocument(doc(db, 'decks', props.id)) : ref({
   name: '',
   lecturer: '',
   cards: [],
   users: [],
 });
-const cards = [];
+let cards = [];
+
+watch(deck, () => {
+  if (cards.length == 0)
+    cards = deck.value.cards;
+})
 
 const addCard = async (card) => {
-  deck.value.cards.push(card);
   await saveAndAddCard(card);
 };
 
@@ -116,13 +121,19 @@ const removeCard = (index) => {
   cards.splice(index, 1);
 };
 const addUsers = (users) => {
-  deck.value.users = deck.value.users.concat(users.value);
+  deck.value.users = users.value;
+};
+const removeUser = (userId) => {
+  const index = deck.value.users.map(function (x) { return x.id; }).indexOf(userId);
+  deck.value.users.splice(index, 1);
 };
 const validate = () => {
   return deck.value.name !== '' && deck.value.lecturer !== '' && deck.value.cards.length !== 0;
 };
 const saveAndAddCard = async (card) => {
-  cards.push(await addDoc(collection(db, "cards"), card));
+  const cardDoc = await addDoc(collection(db, "cards"), card);
+  card.id = cardDoc.id;
+  deck.value.cards.push(card);
 };
 
 onBeforeMount(() => {
@@ -131,11 +142,17 @@ onBeforeMount(() => {
     deck.value.users.push(currentUser);
 })
 const save = async () => {
+  loading.value = true;
   if (validate()) {
     deck.value.cards = cards;
     deck.value.users = deck.value.users.map((user) => {
       if (user.id)
         return doc(db, "users", user.id);
+
+    })
+    deck.value.cards = deck.value.cards.map((card) => {
+      if (card.id)
+        return doc(db, "cards", card.id);
 
     })
     if (props.id)
@@ -148,7 +165,9 @@ const save = async () => {
       lecturer: '',
       cards: [],
     };
+    loading.value = false;
   } else {
+    loading.value = false;
     const toast = await toastController.create({
       message: 'Enter all values!',
       duration: 3000,
