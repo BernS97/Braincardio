@@ -55,6 +55,7 @@ const cancel = () => {
   modal.value.$el.dismiss(null, 'cancel');
   question.value = '';
   answer.value = '';
+  selectedSegment.value = 'question';
 };
 const addCard = async function () {
   if (question.value === '' || answer.value === '') {
@@ -72,6 +73,7 @@ const addCard = async function () {
     });
     question.value = '';
     answer.value = '';
+    selectedSegment.value = 'question';
     var list = document.getElementsByClassName("ql-editor");
     for (let item of list) {
       item.innerHTML = '';
