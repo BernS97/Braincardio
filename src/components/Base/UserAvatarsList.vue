@@ -1,6 +1,6 @@
 <template>
-    <div class="wrapper">
-        <user-avatar class="avatar small" v-for="(user, index) in slicedUsers" :userProfile="user"
+    <div :class="`wrapper users-${slicedUsers.length}`">
+        <user-avatar class="avatar small" v-for="(user, index) in  slicedUsers " :userProfile="user"
             :style="{ left: `-${index * 15}px` }" />
         <div class="avatar additionalUsers" v-if="users.length > 3">
             +{{ users.length - slicedUsers.length }}
@@ -19,7 +19,6 @@ const slicedUsers = props.users.slice(0, 3);
 .wrapper {
     position: relative;
     display: flex;
-    right: -20px;
     align-items: center;
     justify-content: center;
 }
@@ -40,4 +39,15 @@ const slicedUsers = props.users.slice(0, 3);
     color: white;
 }
 
+.users-2 {
+    right: -15px;
+}
+
+.users-3 {
+    right: -30px;
+}
+
+.users-3 {
+    right: -30px;
+}
 </style>

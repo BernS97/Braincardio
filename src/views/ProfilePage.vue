@@ -2,7 +2,7 @@
   <ion-page style="--background: green">
     <ion-content :fullscreen="true">
       <div class="userAvatarArea">
-        <user-avatar :userProfile="userProfile" :badge="true" />
+        <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" />
       </div>
       <div class="userData">
         <h1>{{ userProfile.name }}</h1>
@@ -46,7 +46,7 @@
 
 <script setup>
 import { IonContent, IonPage, IonButton, IonItem, IonButtons, IonTitle, IonModal, modalController, IonToolbar, IonHeader } from '@ionic/vue';
-import { defineComponent, onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
 import UserAvatar from '@/components/Base/UserAvatar.vue';
 import { useUserStore } from '@/plugins/pinia/users';
@@ -77,7 +77,7 @@ ion-avatar {
 }
 
 .userAvatarArea {
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 .userData {

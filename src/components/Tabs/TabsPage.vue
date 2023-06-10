@@ -1,5 +1,5 @@
 <template>
-    <ion-page v-if="route.fullPath != '/login'">
+    <ion-page v-if="route.fullPath != '/login' && route.fullPath != '/'">
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar class="translucent" :translucent="true" slot="bottom">
