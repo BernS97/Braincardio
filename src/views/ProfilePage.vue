@@ -2,7 +2,7 @@
   <ion-page style="--background: green">
     <ion-content :fullscreen="true">
       <div class="userAvatarArea">
-        <user-avatar :userProfile="userProfile" :badge="true" />
+        <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" />
       </div>
       <div class="userData">
         <h1>{{ userProfile.name }}</h1>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { IonContent, IonPage, IonButton } from '@ionic/vue';
+import { IonContent, IonPage, IonButton, IonSelect, IonSelectOption, IonItem, IonList, IonToggle, IonLabel } from '@ionic/vue';
 import { onBeforeMount, ref } from 'vue';
 import UserAvatarsList from '@/components/Base/UserAvatarsList.vue';
 import UserAvatar from '@/components/Base/UserAvatar.vue';
@@ -59,7 +59,7 @@ ion-avatar {
 }
 
 .userAvatarArea {
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 .userData {

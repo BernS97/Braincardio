@@ -41,7 +41,7 @@ const i18n = createI18n({
 const pinia = createPinia();
 const router = createRouter(pinia);
 
-const app = createApp(App).use(IonicVue).use(i18n).use(router);
+const app = createApp(App).use(IonicVue).use(pinia).use(i18n).use(router);
 
 router.isReady().then(() => {
   app.mount("#app");
