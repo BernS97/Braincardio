@@ -28,5 +28,7 @@
   "german": "German",
   "spanish": "Spanish",
   "friends": "Friends",
-  "level": "Lvl."
+  "level": "Lvl.",
+  "noFriendRequests": "No friends request at the moment. ",
+  "acceptedRequest": "You are now friends with {name}. "
 }
