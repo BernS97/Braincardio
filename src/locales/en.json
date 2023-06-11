@@ -30,7 +30,7 @@
   "friends": "Friends",
   "level": "Lvl.",
   "noFriendRequests": "No friends request at the moment. ",
-  "acceptedRequest": "You are now friends with {name}. "
+  "acceptedRequest": "You are now friends with {name}. ",
   "search": "Search",
   "add": "Add",
   "cancel": "Cancel",
