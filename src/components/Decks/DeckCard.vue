@@ -14,14 +14,6 @@
         <user-avatars-list :users="deck.users" />
       </ion-item>
     </ion-card-content>
-    <ion-button id="present-alert" fill="clear">...</ion-button>
-    <ion-alert
-      trigger="present-alert"
-      header="Delete?"
-      sub-header="Important message"
-      message="Do you really want to delete this deck?"
-      :buttons="alertButtons"
-    ></ion-alert>
   </ion-card>
 </template>
 <script setup>
@@ -33,7 +25,6 @@ import {
   IonBadge,
   IonItem,
   IonLabel,
-  IonAlert,
 } from "@ionic/vue";
 import { useRouter } from "vue-router";
 import UserAvatarsList from "@/components/Base/UserAvatarsList.vue";
