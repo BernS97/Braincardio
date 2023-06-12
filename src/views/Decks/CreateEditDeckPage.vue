@@ -91,12 +91,15 @@
       </ion-list>
       <CreateCardModal ref="modal" trigger="open-modal" @added="addCard" />
       <ion-button
+        v-if="id"
         class="deleteButton"
         expand="block"
         @click="deleteDeck"
         color="danger"
-        >Delete</ion-button
       >
+        <div>Delete</div>
+      </ion-button>
+      <loading-spinner v-if="loading" :message="$t('loggingIn')" />
     </ion-content>
   </ion-page>
 </template>
@@ -124,19 +127,29 @@ import {
 } from "@ionic/vue";
 import { addOutline } from "ionicons/icons";
 import { ref, onBeforeMount, watch } from "vue";
-import { addDoc, updateDoc, collection, doc } from "firebase/firestore";
+import {
+  addDoc,
+  updateDoc,
+  collection,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { db } from "@/plugins/firebase";
 import { useUserStore } from "@/plugins/pinia/users";
 import CreateCardModal from "@/components/Decks/CreateCardModal.vue";
 import DeckUsers from "@/components/Decks/DeckUsers.vue";
 import { useDocument } from "vuefire";
+import { useI18n } from "vue-i18n";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const props = defineProps(["id"]);
 const userStore = useUserStore();
 const router = useRouter();
 const page = ref();
 const loading = ref(false);
+const { t } = useI18n();
+
 const deck = props.id
   ? useDocument(doc(db, "decks", props.id))
   : ref({
@@ -148,7 +161,7 @@ const deck = props.id
 let cards = [];
 
 watch(deck, () => {
-  if (cards.length == 0) cards = deck.value.cards;
+  if (cards.length == 0) cards = deck?.value?.cards;
 });
 
 const addCard = async (card) => {
@@ -181,6 +194,7 @@ const saveAndAddCard = async (card) => {
   const cardDoc = await addDoc(collection(db, "cards"), card);
   card.id = cardDoc.id;
   deck.value.cards.push(card);
+  cards.push(card);
 };
 
 onBeforeMount(() => {
@@ -215,6 +229,20 @@ const save = async () => {
     });
     await toast.present();
   }
+};
+
+const deleteDeck = async () => {
+  router.push("/decks");
+  deck.value.cards.forEach(async (card) => {
+    await deleteDoc(doc(db, "cards", card.id));
+  });
+  await deleteDoc(doc(db, "decks", props.id));
+  const toast = await toastController.create({
+    message: t("deckDeleted"),
+    duration: 3000,
+    color: "danger",
+  });
+  await toast.present();
 };
 </script>
 

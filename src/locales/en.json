@@ -55,5 +55,6 @@
   "learn": "Learn",
   "users": "Users",
   "general": "General",
-  "delete": "Delete"
+  "delete": "Delete",
+  "deckDeleted": "Deck deleted!"
 }
