@@ -30,5 +30,4 @@ import { useRouter } from "vue-router";
 import UserAvatarsList from "@/components/Base/UserAvatarsList.vue";
 defineProps(["deck"]);
 const router = useRouter();
-const alertButtons = ["Delete"];
 </script>

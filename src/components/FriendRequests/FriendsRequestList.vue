@@ -19,7 +19,7 @@
     </ion-item>
   </ion-list>
 </template>
-<script>
+<script setup>
 import {
   IonButton,
   IonItem,
