@@ -4,7 +4,7 @@
             <ion-card-title>{{ placeholder }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <quill-editor v-model:content="myValue" :modules="modules" :toolbar="toolbarOptions" content-type="text"
+            <quill-editor v-model:content="myValue" :modules="modules" :toolbar="toolbarOptions" content-type="html"
                 :placeholder="placeholder" />
         </ion-card-content>
     </ion-card>
@@ -27,6 +27,35 @@ const myValue = computed({
         emit("update:modelValue", nextValue);
     },
 });
+
+function resizeImage(base64Str) {
+
+    var img = new Image();
+    img.src = base64Str;
+    var canvas = document.createElement('canvas');
+    var MAX_WIDTH = 400;
+    var MAX_HEIGHT = 350;
+    var width = img.width;
+    var height = img.height;
+
+    if (width > height) {
+        if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+        }
+    } else {
+        if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+        }
+    }
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL();
+}
+
 const toolbarOptions = [[{ 'header': [1, 2, 3, false] }], ['bold', 'italic', 'underline'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['image']];
 const modules = {
     name: 'imageUploader',
@@ -37,7 +66,8 @@ const modules = {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = function () {
-                    resolve(reader.result);
+                    const base64 = resizeImage(reader.result);
+                    resolve(base64);
                 };
                 reader.onerror = function (error) {
                     reject();

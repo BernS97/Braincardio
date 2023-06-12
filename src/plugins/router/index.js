@@ -2,6 +2,8 @@ import TabsPage from "@/components/Tabs/TabsPage.vue";
 import { useUserStore } from "@/plugins/pinia/users";
 import CreateEditDeckPage from "@/views/Decks/CreateEditDeckPage.vue";
 import DeckDetailPage from "@/views/Decks/DeckDetailPage.vue";
+import LearnPage from "@/views/Decks/LearnPage.vue";
+import SummarizeLearnModal from "@/views/Decks/SummarizeLearnModal.vue";
 import DecksPage from "@/views/DecksPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
@@ -13,6 +15,16 @@ const routes = [
     path: "/login",
     name: "Login",
     component: LoginPage,
+  },
+  {
+    path: "/learn/:id",
+    props: true,
+    component: LearnPage,
+  },
+  {
+    path: "/statistics/:id",
+    props: true,
+    component: SummarizeLearnModal,
   },
   {
     path: "/",

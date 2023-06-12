@@ -55,5 +55,18 @@
   "learn": "Learn",
   "users": "Users",
   "general": "General",
-  "delete": "Delete"
+  "delete": "Delete",
+  "speak": "speak",
+  "stopSpeak": "Stop Speak",
+  "listen": "listen",
+  "stopListen": "Stop listen",
+  "prev": "Prev",
+  "right": "Right",
+  "wrong": "Wrong",
+  "correct": "Correct",
+  "next": "Next",
+  "done": "Done",
+  "close": "Close",
+  "summary": "Summary",
+  "flipToAnswer": "Click the card to see the Answer"
 }
