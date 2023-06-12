@@ -95,9 +95,8 @@
         expand="block"
         @click="deleteDeck"
         color="danger"
+        >Delete</ion-button
       >
-        <div>Delete</div>
-      </ion-button>
     </ion-content>
   </ion-page>
 </template>
