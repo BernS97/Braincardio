@@ -80,24 +80,26 @@
                     {{ $t("noFriends") }}
                   </div>
                 </ion-list>
+                <ion-list :inset="true">
+                  <ion-list-header>
+                    <ion-label>
+                      {{ $t("addFriends") }}
+                    </ion-label>
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-input
+                      :placeholder="$t('enterFriendsUsername')"
+                      @ionInput="userName = $event.target.value"
+                    />
+                    <ion-button
+                      @click="addFriend"
+                      slot="end"
+                      :disabled="userName === ''"
+                      >{{ $t("add") }}</ion-button
+                    >
+                  </ion-item>
+                </ion-list>
                 <friends-request-list :currentUserDoc="currentUserDoc" />
-                <ion-fab>
-                  <ion-fab-button id="modal-friends" expand="block">
-                    <ion-icon :icon="add"></ion-icon>
-                  </ion-fab-button>
-                </ion-fab>
-                <ion-modal ref="modal-friends" trigger="modal-friends">
-                  <ion-page>
-                    <ion-header>
-                      <ion-toolbar>
-                        <ion-buttons slot="start">
-                          <ion-button @click="cancel">Cancel</ion-button>
-                        </ion-buttons>
-                        <ion-title>{{ $t("addFriends") }}</ion-title>
-                      </ion-toolbar>
-                    </ion-header>
-                  </ion-page>
-                </ion-modal>
               </ion-content>
             </ion-page>
           </ion-modal>
@@ -115,13 +117,11 @@ import {
   IonContent,
   IonPage,
   IonButton,
-  IonIcon,
   IonItem,
   IonItemOption,
   IonItemOptions,
   IonItemSliding,
   IonList,
-  IonFab,
   IonListHeader,
   IonLabel,
   IonSelect,
@@ -132,8 +132,7 @@ import {
   modalController,
   IonToolbar,
   IonHeader,
-  IonFabButton,
-  IonSearchbar,
+  IonInput,
 } from "@ionic/vue";
 import { onBeforeMount, ref } from "vue";
 import { add } from "ionicons/icons";
@@ -142,11 +141,13 @@ import UserAvatar from "@/components/Base/UserAvatar.vue";
 import FriendsRequestList from "@/components/FriendRequests/FriendsRequestList.vue";
 import { useUserStore } from "@/plugins/pinia/users";
 import { useRouter } from "vue-router";
-import { doc } from "firebase/firestore";
+import { collection, doc, query, where } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
+import { useCollection } from "vuefire";
 
 const userStore = useUserStore();
 const userProfile = ref("");
+const userName = ref("");
 const router = useRouter();
 const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
 
@@ -157,6 +158,25 @@ onBeforeMount(async () => {
 const logOut = () => {
   userStore.logOut();
   router.push("/login");
+};
+const addFriend = async () => {
+  if (userName.value === userProfile.value)
+    console.log("Adding own user is not possible."); //TODO: at toast message.
+  else {
+    const users = await useCollection(
+      query(collection(db, "users"), where("name", "==", userName.value)) //TODO(!) this does not work!
+    );
+    const friend = users[0];
+    if (friend) {
+      const friendRequest = {
+        approved: null,
+        from: doc(db, "users", userProfile.value.id),
+        to: doc(db, "users", friend.id),
+      };
+      addDoc(collection(db, "friendRequest"), friendRequest);
+      console.log("Sent."); //TODO: at toast message.
+    }
+  }
 };
 
 const cancel = () => {
