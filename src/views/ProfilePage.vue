@@ -2,11 +2,7 @@
   <ion-page style="--background: green">
     <ion-content :fullscreen="true">
       <div class="userAvatarArea">
-        <user-avatar
-          v-if="userProfile"
-          :userProfile="userProfile"
-          :badge="true"
-        />
+        <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" />
       </div>
       <div class="userData">
         <h1>{{ userProfile.name }}</h1>
@@ -17,12 +13,7 @@
           <ion-toggle :translucent="true">Focus Mode</ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-select
-            value="en"
-            :label="$t('language')"
-            label-placement="fixed"
-            :aria-label="$t('language')"
-          >
+          <ion-select value="en" :label="$t('language')" label-placement="fixed" :aria-label="$t('language')">
             <ion-select-option value="en">{{
               $t("english")
             }}</ion-select-option>
@@ -34,10 +25,7 @@
         </ion-item>
         <ion-item button id="open-modal" expand="block">
           <ion-label>{{ $t("friends") }}</ion-label>
-          <user-avatars-list
-            v-if="userProfile"
-            :users="userProfile.friends"
-          ></user-avatars-list>
+          <user-avatars-list v-if="userProfile" :users="userProfile.friends"></user-avatars-list>
           <ion-modal ref="modal" trigger="open-modal">
             <ion-page>
               <ion-header>
@@ -54,25 +42,15 @@
                     <ion-label>{{ $t("friends") }}</ion-label>
                   </ion-list-header>
                   <div v-if="userProfile?.friends?.length > 0">
-                    <ion-item-sliding
-                      v-for="(user, idx) in userProfile?.friends"
-                      :key="user?.id"
-                    >
+                    <ion-item-sliding v-for="(user, idx) in userProfile?.friends" :key="user?.id">
                       <ion-item>
                         <div slot="start" v-if="user?.image">
-                          <user-avatar
-                            class="small avatar"
-                            :userProfile="user"
-                          />
+                          <user-avatar class="small avatar" :userProfile="user" />
                         </div>
                         <ion-label>{{ user?.name }}</ion-label>
                       </ion-item>
                       <ion-item-options>
-                        <ion-item-option
-                          color="danger"
-                          @click="removeUser(user.id)"
-                          >{{ $t("delete") }}</ion-item-option
-                        >
+                        <ion-item-option color="danger" @click="removeUser(user.id)">{{ $t("delete") }}</ion-item-option>
                       </ion-item-options>
                     </ion-item-sliding>
                   </div>
@@ -87,16 +65,8 @@
                     </ion-label>
                   </ion-list-header>
                   <ion-item>
-                    <ion-input
-                      :placeholder="$t('enterFriendsUsername')"
-                      @ionInput="userName = $event.target.value"
-                    />
-                    <ion-button
-                      @click="addFriend"
-                      slot="end"
-                      :disabled="userName === ''"
-                      >{{ $t("add") }}</ion-button
-                    >
+                    <ion-input :placeholder="$t('enterFriendsUsername')" @ionInput="userName = $event.target.value" />
+                    <ion-button @click="addFriend" slot="end" :disabled="userName === ''">{{ $t("add") }}</ion-button>
                   </ion-item>
                 </ion-list>
                 <friends-request-list :currentUserDoc="currentUserDoc" />
@@ -105,8 +75,7 @@
           </ion-modal>
         </ion-item>
       </ion-list>
-      <ion-button class="logoutButton" expand="block" @click="logOut"
-        >Logout
+      <ion-button class="logoutButton" expand="block" @click="logOut">Logout
       </ion-button>
     </ion-content>
   </ion-page>
@@ -141,7 +110,7 @@ import UserAvatar from "@/components/Base/UserAvatar.vue";
 import FriendsRequestList from "@/components/FriendRequests/FriendsRequestList.vue";
 import { useUserStore } from "@/plugins/pinia/users";
 import { useRouter } from "vue-router";
-import { collection, doc, query, where } from "firebase/firestore";
+import { collection, doc, query, where, addDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
 import { useCollection } from "vuefire";
 
@@ -163,17 +132,18 @@ const addFriend = async () => {
   if (userName.value === userProfile.value)
     console.log("Adding own user is not possible."); //TODO: at toast message.
   else {
-    const users = await useCollection(
+    const { data: users, promise } = useCollection(
       query(collection(db, "users"), where("name", "==", userName.value)) //TODO(!) this does not work!
     );
-    const friend = users[0];
+    await promise.value;
+    const friend = users.value[0];
     if (friend) {
       const friendRequest = {
         approved: null,
         from: doc(db, "users", userProfile.value.id),
         to: doc(db, "users", friend.id),
       };
-      addDoc(collection(db, "friendRequest"), friendRequest);
+      addDoc(collection(db, "friendRequests"), friendRequest);
       console.log("Sent."); //TODO: at toast message.
     }
   }
