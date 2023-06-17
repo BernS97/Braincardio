@@ -71,6 +71,13 @@
   "flipToAnswer": "Click the card to see the Answer",
   "skipped": "Skipped",
   "duels": "Duels",
+  "duel": "Duel",
   "noDuels": "No duels at the moment",
-  "newDuel": "new Duel"
+  "newDuel": "new Duel",
+  "ceateDuel": "Create duel",
+  "cardAmount": "Amount of cards",
+  "name": "Name",
+  "namePlaceholder": "Enter a name",
+  "yourAnswer": "Your answer",
+  "answerFrom": "Answer from "
 }

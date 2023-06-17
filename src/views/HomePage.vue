@@ -31,11 +31,11 @@
         <div v-if="duels.length > 0">
           <ion-item v-for="duel in  duels " :key="duel.id" @click="router.push('/duel/' + duel.id);">
             <div slot="start">
-              <user-avatar :userProfile="duel?.users[0]" />
+              <user-avatar class="small avatar" :userProfile="duel?.users[0]" />
             </div>
             {{ duel.name }}
             <div slot="end">
-              <user-avatar :userProfile="duel?.users[1]" />
+              <user-avatar class="small avatar" :userProfile="duel?.users[1]" />
             </div>
           </ion-item>
         </div>
