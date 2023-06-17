@@ -31,11 +31,11 @@
         <div v-if="duels.length > 0">
           <ion-item v-for="duel in  duels " :key="duel.id" @click="router.push('/duel/' + duel.id);">
             <div slot="start">
-              <avatar-circle :background="duel?.users[0]?.image?.background" :emoji="duel?.users[0]?.image?.emoji" />
+              <user-avatar :userProfile="duel?.users[0]" />
             </div>
             {{ duel.name }}
             <div slot="end">
-              <avatar-circle :background="duel?.users[1]?.image?.background" :emoji="duel?.users[1]?.image?.emoji" />
+              <user-avatar :userProfile="duel?.users[1]" />
             </div>
           </ion-item>
         </div>
@@ -49,7 +49,8 @@
 
 <script setup>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonLabel, IonItem, IonList, IonListHeader } from '@ionic/vue';
-import TodayChart from '@/components/Home/TodayChart.vue'
+import TodayChart from '@/components/Home/TodayChart.vue';
+import UserAvatar from '@/components/Base/UserAvatar.vue';
 import { useLearnStatistics } from '@/composables/LearnStatistics'
 import { computed, watch, onBeforeMount } from 'vue';
 import { db } from '@/plugins/firebase';

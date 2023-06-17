@@ -71,5 +71,6 @@
   "flipToAnswer": "Click the card to see the Answer",
   "skipped": "Skipped",
   "duels": "Duels",
-  "noDuels": "No duels at the moment"
+  "noDuels": "No duels at the moment",
+  "newDuel": "new Duel"
 }

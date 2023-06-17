@@ -2,6 +2,7 @@ import TabsPage from "@/components/Tabs/TabsPage.vue";
 import { useUserStore } from "@/plugins/pinia/users";
 import CreateEditDeckPage from "@/views/Decks/CreateEditDeckPage.vue";
 import DeckDetailPage from "@/views/Decks/DeckDetailPage.vue";
+import DuelPage from "@/views/Decks/DuelPage.vue";
 import LearnPage from "@/views/Decks/LearnPage.vue";
 import SummarizeLearnModal from "@/views/Decks/SummarizeLearnModal.vue";
 import DecksPage from "@/views/DecksPage.vue";
@@ -25,6 +26,11 @@ const routes = [
     path: "/statistics/:id",
     props: true,
     component: SummarizeLearnModal,
+  },
+  {
+    path: "/duel/:id",
+    props: true,
+    component: DuelPage,
   },
   {
     path: "/",
