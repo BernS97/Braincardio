@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 export const useStatisticsStore = defineStore({
-  id: 'statistics',
+  id: "statistics",
   state: () => ({
     statistics: [],
   }),

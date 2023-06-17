@@ -63,7 +63,7 @@ const acceptFriendRequest = async (request) => {
   await toast.present();
 };
 const declineFriendRequest = async (request) => {
-  //pprove request
+  //approve request
   request.approved = false;
   await updateDoc(doc(db, "friendrequests", request.id), request);
 };

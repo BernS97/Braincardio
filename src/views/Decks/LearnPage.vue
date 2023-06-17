@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page v-if="route.fullPath.includes('learn')">
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
@@ -24,7 +24,7 @@
 <script setup>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonProgressBar, IonButtons, IonButton, IonBackButton } from '@ionic/vue';
 import { computed, ref, watch, onBeforeMount } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 import LearnCarousel from "@/components/Learn/LearnCarousel.vue";
 import { cloneDeep } from 'lodash-es';
@@ -41,6 +41,7 @@ const learnObjStore = useLearnObjStore();
 const statisticsStore = useStatisticsStore();
 const userStore = useUserStore();
 const router = useRouter();
+const route = useRoute();
 const user = userStore.getUser;
 const deck = ref();
 
@@ -52,7 +53,7 @@ const skippedCards = ref([]);
 const total = ref(0);
 
 const current = computed(() => total.value - (total.value - (correctCards.value.length + wrongCards.value.length + skippedCards.value.length)));
-const progress = computed(() => current.value / (total.value - skippedCards.value.length));
+const progress = computed(() => current.value / total.value);
 
 watch(progress, () => {
   if (progress.value === 1)
@@ -60,16 +61,19 @@ watch(progress, () => {
 });
 
 const handleCardAccepted = async (cardIndex) => {
-  const card = await learnObj.value?.cards[cardIndex];
-  await learnObjStore.handleCardAccepted(cardIndex);
+  const card = learnObj.value?.cards[cardIndex];
+  await learnObjStore.handleCardAccepted(cardIndex > 0 ? cardIndex : 0);
   correctCards.value.push(card);
 };
 const handleCardRejected = async (cardIndex) => {
-  await learnObjStore.handleCardRejected(cardIndex > 0 ? cardIndex - 1 : 0);
-  wrongCards.value.push(learnObj.value?.cards[cardIndex]);
+  const card = learnObj.value?.cards[cardIndex];
+  await learnObjStore.handleCardRejected(cardIndex > 0 ? cardIndex : 0);
+  wrongCards.value.push(card);
 };
-const handleCardSkipped = (cardIndex) => {
-  skippedCards.value.push(learnObj.value?.cards[cardIndex]);
+const handleCardSkipped = async (cardIndex) => {
+  const card = learnObj.value?.cards[cardIndex];
+  await learnObjStore.handleCardSkipped(cardIndex > 0 ? cardIndex : 0);
+  skippedCards.value.push(card);
 };
 const handlePrevious = (cardIndex) => {
   const card = learnObj.value?.cards[cardIndex];
@@ -86,6 +90,9 @@ const handlePrevious = (cardIndex) => {
 const finishLearn = async () => {
   const statisticId = await learnObjStore.getStatisticId;
   router.push('/statistics/' + statisticId);
+  skippedCards.value = [];
+  correctCards.value = [];
+  wrongCards.value = [];
 }
 
 const getStatistics = async () => {

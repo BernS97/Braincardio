@@ -40,15 +40,21 @@ export const useLearnObjStore = defineStore({
     async handleCardAccepted(current) {
       const card = this.learnObj.cards[current];
       if (card?.status < 5) card.status++;
-      await this.handleUpdate({ card: card, result: 1 });
+      card.result = 1;
+      await this.handleUpdate();
     },
     async handleCardRejected(current) {
       const card = this.learnObj.cards[current];
       card.status = 0;
-      await this.handleUpdate({ card: card, result: 0 });
+      card.result = 0;
+      await this.handleUpdate();
     },
-    async handleUpdate(params) {
-      params.card.result = params.result;
+    async handleCardSkipped(current) {
+      const card = this.learnObj.cards[current];
+      card.result = 2;
+      await this.handleUpdate();
+    },
+    async handleUpdate() {
       if (!this.statisticId) {
         const statisticId = await (
           await addDoc(collection(db, "statistics"), this.learnObj)

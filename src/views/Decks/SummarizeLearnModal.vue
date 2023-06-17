@@ -9,7 +9,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <div>
+      <div style="margin-top: 50px">
         <Doughnut v-if="data" :data="data" :options="options" />
       </div>
       <ion-list :inset="true">
@@ -17,7 +17,7 @@
           <ion-label>{{ $t('cards') }}</ion-label>
         </ion-list-header>
         <ion-item v-for="card in statistics?.cards" :key="card.id">
-          <span :class="[{ 'right': card.status == 1, 'wrong': card.status == 0 }, 'status']"></span>{{ card.question }}
+          <span :class="[{ 'right': card.result == 1, 'wrong': card.result == 0 }, 'status']"></span>{{ card.question }}
         </ion-item>
       </ion-list>
     </ion-content>
@@ -61,15 +61,15 @@ onBeforeMount(async () => {
   const { data: statisticsData, promise } = useDocument(doc(db, "statistics", props.id));
   promise.value.then(() => {
     statistics.value = statisticsData.value;
-    const total = statistics?.value?.cards?.length;
     const wrongCount = statistics?.value?.cards.filter((card) => card.result == 0).length;
     const rightCount = statistics?.value?.cards.filter((card) => card.result == 1).length;
+    const skippedCards = statistics?.value?.cards.filter((card) => card.result == 2).length;
     data.value = {
       labels: [t('wrong'), t('right'), t('skipped')],
       datasets: [
         {
           backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)', '#ccc'],
-          data: [wrongCount, rightCount, total - (wrongCount + rightCount)]
+          data: [wrongCount, rightCount, skippedCards]
         }
       ]
     }

@@ -68,5 +68,6 @@
   "done": "Done",
   "close": "Close",
   "summary": "Summary",
-  "flipToAnswer": "Click the card to see the Answer"
+  "flipToAnswer": "Click the card to see the Answer",
+  "skipped": "Skipped"
 }
