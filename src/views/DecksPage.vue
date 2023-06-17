@@ -14,12 +14,6 @@
             <ion-button>
               <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>
             </ion-button>
-            <ion-button>
-              <ion-avatar>
-                <img alt="Silhouette of a person's head"
-                  src="https://erp-information.de/wp-content/uploads/2022/10/breitsch.png" />
-              </ion-avatar>
-            </ion-button>
           </ion-buttons>
         </ion-toolbar>
         <ion-toolbar>

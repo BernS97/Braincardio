@@ -3,6 +3,11 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+  --brain-primary: #03fef8;
+  --brain-base: #0c2840;
+  --brain-primary_2: #00f2fe;
+  --brain-primary_3: #339cf8;
+
   --ion-background-color: #f9f9f9;
   --ion-item-background: #ffffff;
   /** primary **/

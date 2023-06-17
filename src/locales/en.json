@@ -69,5 +69,7 @@
   "close": "Close",
   "summary": "Summary",
   "flipToAnswer": "Click the card to see the Answer",
-  "skipped": "Skipped"
+  "skipped": "Skipped",
+  "duels": "Duels",
+  "noDuels": "No duels at the moment"
 }
