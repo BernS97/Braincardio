@@ -43,7 +43,7 @@ import {
   toastController
 } from '@ionic/vue';
 import { ref } from 'vue';
-import CardEditor from '@/components/Decks/CardEditor.vue';
+import CardEditor from '@/components/Base/CardEditor.vue';
 
 const emit = defineEmits(["added"]);
 const props = defineProps(["trigger"]);

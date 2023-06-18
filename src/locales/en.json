@@ -79,5 +79,9 @@
   "name": "Name",
   "namePlaceholder": "Enter a name",
   "yourAnswer": "Your answer",
-  "answerFrom": "Answer from "
+  "answerFrom": "Answer from ",
+  "duelWon": "Won the duel",
+  "winnerText": "",
+  "drawText": "",
+  "draw": "Draw"
 }

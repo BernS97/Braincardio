@@ -5,7 +5,7 @@
                 <ion-card-title>{{ $t('question') }}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                {{ currentTurn?.card?.question }}
+                <div v-html="currentTurn?.card?.question"></div>
             </ion-card-content>
         </ion-card>
         <ion-card>
@@ -13,7 +13,7 @@
                 <ion-card-title>{{ $t('answer') }}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                {{ currentTurn?.card?.answer }}
+                <div v-html="currentTurn?.card?.answer"></div>
             </ion-card-content>
         </ion-card>
         <ion-card>
@@ -21,18 +21,18 @@
                 <ion-card-title>{{ $t('answerFrom') + oponent?.name }}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                {{ currentTurn?.userAnswer }}
+                <div v-html="currentTurn?.userAnswer"></div>
             </ion-card-content>
-            <div>
-                <ion-button color="danger" @click="setCardResult(0)">
-                    {{ $t('wrong') }}
-                </ion-button>
-                <ion-button color="success" @click="setCardResult(1)">
-                    {{ $t('right') }}
-                </ion-button>
-            </div>
-        </ion-card>
 
+        </ion-card>
+        <div class="button-wrapper">
+            <ion-button color="danger" class="rate-button" @click="setCardResult(0)">
+                {{ $t('wrong') }}
+            </ion-button>
+            <ion-button color="success" class="rate-button" @click="setCardResult(1)">
+                {{ $t('right') }}
+            </ion-button>
+        </div>
     </ion-content>
 </template>
 <script setup>
@@ -45,3 +45,14 @@ const setCardResult = (result) => {
 }
 
 </script>
+<style>
+.button-wrapper {
+    margin: 15px
+}
+
+.rate-button {
+    width: 48%;
+    margin-right: 4px;
+    float: left;
+}
+</style>

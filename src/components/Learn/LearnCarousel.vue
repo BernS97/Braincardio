@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { IonButton, IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
+import { IonButton, IonCard, IonCardTitle, IonCardHeader, IonCardContent } from '@ionic/vue';
 import { ref } from 'vue';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';

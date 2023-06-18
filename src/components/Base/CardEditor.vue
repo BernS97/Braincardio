@@ -1,7 +1,7 @@
 <template>
     <ion-card class="card-editor">
         <ion-card-header>
-            <ion-card-title>{{ placeholder }}</ion-card-title>
+            <ion-card-title>{{ title }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
             <quill-editor v-model:content="myValue" :modules="modules" :toolbar="toolbarOptions" content-type="html"
@@ -16,7 +16,7 @@ import { QuillEditor } from '@vueup/vue-quill';
 import ImageUploader from 'quill-image-uploader';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import 'quill-image-uploader/dist/quill.imageUploader.min.css';
-const props = defineProps(["modelValue", "placeholder"]);
+const props = defineProps(["modelValue", "placeholder", "title"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const myValue = computed({

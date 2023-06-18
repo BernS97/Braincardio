@@ -9,23 +9,16 @@
                 {{ currentTurn?.card?.question }}
             </ion-card-content>
         </ion-card>
-        <ion-card>
-            <ion-card-header>
-                <ion-card-title>{{ $t('yourAnswer') }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-textarea :label="$t('answer')" label-placement="stacked" @ionInput="answer = $event.target.value"
-                    type="text" :auto-grow="true" />
-                <ion-button @click="answerCard">
-                    {{ $t('answer') }}
-                </ion-button>
-            </ion-card-content>
-        </ion-card>
+        <card-editor v-model="answer" :placeholder="$t('answer')" :title="$t('yourAnswer')" />
+        <ion-button id="answerCard" expand="block" @click="answerCard">
+            {{ $t('answer') }}
+        </ion-button>
     </ion-content>
 </template>
 <script setup>
 import { IonContent, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonButton, IonTextarea } from '@ionic/vue';
 import { ref } from 'vue';
+import CardEditor from '@/components/Base/CardEditor.vue';
 defineProps(["duel", "myTurn", "currentTurn"]);
 const emit = defineEmits(["duel", "myTurn", "currentTurn"]);
 const answer = ref("");
@@ -35,3 +28,12 @@ const answerCard = () => {
 }
 
 </script>
+<style>
+ion-card.card-editor {
+    height: 60%;
+}
+
+#answerCard {
+    margin: 15px;
+}
+</style>

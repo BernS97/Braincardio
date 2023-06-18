@@ -22,3 +22,13 @@ onUnmounted(() => {
 });
 
 </script>
+<style>
+.ion-page ion-loading {
+    top: 45px;
+}
+
+.loading-wrapper {
+    top: -45px;
+    position: relative;
+}
+</style>
