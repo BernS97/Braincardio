@@ -1,6 +1,6 @@
 <template>
     <ion-content :scroll-y="false" :fullscreen="true" v-if="duel?.done">
-        <ion-card v-if="winner?.user">
+        <ion-card v-if="winner?.user" class="winner">
             <user-avatar :userProfile="winner?.user" />
             <ion-card-header>
                 <ion-card-title>{{ winner?.user?.name }}</ion-card-title>
@@ -50,7 +50,7 @@ props.duel.users.forEach(userPath => {
 });
 </script>
 <style>
-.userAvatarBackground {
+.winner .userAvatarBackground {
     border-radius: 0;
     width: 100%;
 }

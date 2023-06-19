@@ -8,6 +8,9 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
+          <ion-title size="large">
+            <span v-if="user" id="helloText">{{ $t('hello', { name: user?.name }) }}</span>
+          </ion-title>
           <ion-buttons slot="primary">
             <ion-button>
               <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>
@@ -93,5 +96,9 @@ onBeforeMount(async () => {
 
 #avatar {
   margin-left: 15px;
+}
+
+#helloText {
+  font-size: 28px;
 }
 </style>

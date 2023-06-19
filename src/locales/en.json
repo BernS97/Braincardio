@@ -83,5 +83,6 @@
   "duelWon": "Won the duel",
   "winnerText": "",
   "drawText": "",
-  "draw": "Draw"
+  "draw": "Draw",
+  "hello": "Hello, {name}! 👋"
 }

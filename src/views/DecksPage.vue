@@ -82,6 +82,6 @@ ion-fab {
   justify-content: center;
   width: 100%;
   position: absolute;
-  bottom: 75px;
+  bottom: 100px;
 }
 </style>
