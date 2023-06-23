@@ -52,10 +52,10 @@ const acceptFriendRequest = async (request) => {
   //add friends
   const from = request.from;
   const name = from.name;
+  from.friends.push(doc(db, "users", request.to.id));
   from.friends = from.friends.map((user) => {
     if (user.id) return doc(db, "users", user.id);
   });
-  from.friends.push(doc(db, "users", request.from.id));
 
   const to = request.to;
   to.friends = to.friends.map((user) => {

@@ -49,7 +49,7 @@
                       </ion-item-options>
                     </ion-item-sliding>
                   </div>
-                  <div v-else>
+                  <div v-else style="margin: 15px;">
                     {{ $t("noFriends") }}
                   </div>
                 </ion-list>
@@ -113,6 +113,7 @@ import { useCollection } from "vuefire";
 const { t, locale } = useI18n();
 const userStore = useUserStore();
 const userProfile = ref('');
+const userName = ref('');
 const settings = ref('');
 const router = useRouter();
 const languages = [{ val: "en", text: t('english') }, { val: "de", text: t('german') }, { val: "es", text: t('spanish') }]
