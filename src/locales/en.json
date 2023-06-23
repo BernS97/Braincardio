@@ -88,6 +88,6 @@
   "winnerText": "",
   "drawText": "",
   "draw": "Draw",
-  "hello": "Hello, {name}! 👋"
+  "hello": "Hello, {name}! 👋",
   "deckDeleted": "Deck deleted!"
 }

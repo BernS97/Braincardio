@@ -97,9 +97,10 @@ import {
   IonToolbar,
   IonHeader,
   IonInput,
+  IonSelectOption
 } from "@ionic/vue";
 import { onBeforeMount, ref } from "vue";
-import { add } from "ionicons/icons";
+import { useI18n } from "vue-i18n";
 import UserAvatarsList from "@/components/Base/UserAvatarsList.vue";
 import UserAvatar from "@/components/Base/UserAvatar.vue";
 import FriendsRequestList from "@/components/FriendRequests/FriendsRequestList.vue";
