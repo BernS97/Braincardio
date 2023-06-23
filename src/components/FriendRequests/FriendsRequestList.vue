@@ -35,28 +35,37 @@ import {
   doc,
   query,
   where,
+  updateDoc
 } from "firebase/firestore";
 import { useCollection } from "vuefire";
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 import { checkmarkOutline, closeOutline } from "ionicons/icons";
 
 const props = defineProps(["currentUserDoc"]);
-const friendRequests = useCollection(query(collection(db, "friendrequests"), where("to", "==", props.currentUserDoc), where("approved", "==", null)));
+const friendRequests = useCollection(query(collection(db, "friendRequests"), where("to", "==", props.currentUserDoc), where("approved", "==", null)));
 
 const acceptFriendRequest = async (request) => {
   //pprove request
-  request.approved = true;
-  await updateDoc(doc(db, "friendrequests", request.id), request);
+  await updateDoc(doc(db, "friendRequests", request.id), { approved: true });
   //add friends
   const from = request.from;
-  from.friends.push(doc(db, "users", request.to.id));
+  const name = from.name;
+  from.friends = from.friends.map((user) => {
+    if (user.id) return doc(db, "users", user.id);
+  });
+  from.friends.push(doc(db, "users", request.from.id));
+
   const to = request.to;
+  to.friends = to.friends.map((user) => {
+    if (user.id) return doc(db, "users", user.id);
+  });
   to.friends.push(doc(db, "users", request.from.id));
-  await updateDoc(doc(db, "users", request.from.id), from);
-  await updateDoc(doc(db, "users", request.to.id), to);
-  this.user.friends = to.friends;
+  await updateDoc(doc(db, "users", request.from.id), { friends: from.friends });
+  await updateDoc(doc(db, "users", request.to.id), { friends: to.friends });
   const toast = await toastController.create({
-    message: t('acceptedRequest', { name: request.from.name }),
+    message: t('acceptedRequest', { name: name }),
     duration: 3000,
     color: 'dark'
   });
@@ -65,7 +74,7 @@ const acceptFriendRequest = async (request) => {
 const declineFriendRequest = async (request) => {
   //pprove request
   request.approved = false;
-  await updateDoc(doc(db, "friendrequests", request.id), request);
+  await updateDoc(doc(db, "friendRequests", request.id), { approved: false });
 };
 
 </script>
