@@ -70,7 +70,7 @@
         </ion-list-header>
         <ion-item v-for="card in searchCards" :key="card">
           <ion-label>
-            <div v-html="card.question"></div>
+            <div v-html="card?.question"></div>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -104,7 +104,7 @@ const collapseBody = () => {
 }
 
 watch(deck, () => {
-  searchCards.value = deck.value.cards
+  searchCards.value = deck?.value?.cards
 })
 
 const openDuelModal = async () => {
