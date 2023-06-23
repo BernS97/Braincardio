@@ -7,6 +7,7 @@ import { createPinia } from "pinia";
 
 import deLocale from "@/locales/de.json";
 import enLocale from "@/locales/en.json";
+import esLocale from "@/locales/es.json";
 import { createI18n } from "vue-i18n";
 
 /* Core CSS required for Ionic components to work properly */
@@ -34,6 +35,7 @@ const i18n = createI18n({
   messages: {
     en: enLocale,
     de: deLocale,
+    es: esLocale,
   },
   legacy: false,
 });

@@ -33,6 +33,10 @@ export const useUserStore = defineStore("user", {
       friends: [],
     }),
     userData: null,
+    settings: useStorage("settings", {
+      language: "en",
+      focusMode: false,
+    }),
   }),
   getters: {
     getUser(state) {
@@ -40,6 +44,9 @@ export const useUserStore = defineStore("user", {
     },
     getLoggedInUserProfile(state) {
       return state.user;
+    },
+    getSettings(state) {
+      return state.settings;
     },
   },
   actions: {
@@ -134,6 +141,9 @@ export const useUserStore = defineStore("user", {
     },
     setUserLocalStorage() {
       localStorage.setItem("login", this.userData);
+    },
+    setLanguage(language) {
+      this.settings.language = language;
     },
   },
 });

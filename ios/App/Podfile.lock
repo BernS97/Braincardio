@@ -3,6 +3,10 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (5.0.0):
     - Capacitor
+  - CapacitorCommunitySpeechRecognition (2.1.0):
+    - Capacitor
+  - CapacitorCommunityTextToSpeech (3.0.0):
+    - Capacitor
   - CapacitorCordova (5.0.4)
   - CapacitorHaptics (5.0.0):
     - Capacitor
@@ -16,6 +20,8 @@ PODS:
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorCommunitySpeechRecognition (from `../../node_modules/@capacitor-community/speech-recognition`)"
+  - "CapacitorCommunityTextToSpeech (from `../../node_modules/@capacitor-community/text-to-speech`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
@@ -27,6 +33,10 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/@capacitor/app"
+  CapacitorCommunitySpeechRecognition:
+    :path: "../../node_modules/@capacitor-community/speech-recognition"
+  CapacitorCommunityTextToSpeech:
+    :path: "../../node_modules/@capacitor-community/text-to-speech"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorHaptics:
@@ -41,12 +51,14 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Capacitor: d3d4463573438b9fa65326d1f3549da6f4c21634
   CapacitorApp: 16e189e0463976060ccf34868e3083858c977e2b
+  CapacitorCommunitySpeechRecognition: b404ef82fa846dd48f6417eb0c47955645ca0996
+  CapacitorCommunityTextToSpeech: 8ab921460746482ac9381170ea97a76b73f18049
   CapacitorCordova: b1fe6bf1f36974a8e4a9044b342d22d49c0996d6
   CapacitorHaptics: a7d1a6be8d84bcb2749bad57230a8b9e8cdcef7c
   CapacitorKeyboard: 8a25a4241b74f69d457a7e81220a54c22214a679
   CapacitorSplashScreen: 22779612c60d1cb2e4f143fdbc096e7056450386
   CapacitorStatusBar: 7ff77f2b22a52a93a140d1b2dede027bfb7d705f
 
-PODFILE CHECKSUM: 87b45c567a9ade1f887a2656149fdc2650659cfa
+PODFILE CHECKSUM: 719c740649f78473538348550050b0e9584d8468
 
 COCOAPODS: 1.12.1

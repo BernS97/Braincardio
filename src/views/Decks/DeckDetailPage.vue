@@ -66,6 +66,7 @@
         <ion-list-header>
           <ion-label>{{ $t('cards') }}</ion-label>
           <ion-button @click="router.push('/learn/' + id)">{{ $t('learn') }}</ion-button>
+          <ion-button @click="openDuelModal">{{ $t('newDuel') }}</ion-button>
         </ion-list-header>
         <ion-item v-for="card in searchCards" :key="card">
           <ion-label>
@@ -78,7 +79,7 @@
 </template>
 
 <script setup>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonListHeader, IonButton, IonButtons, IonBackButton, IonSearchbar, IonIcon } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList, IonListHeader, IonButton, IonButtons, IonBackButton, IonSearchbar, IonIcon, modalController } from '@ionic/vue';
 import { watch, ref } from 'vue';
 import { useRouter } from "vue-router";
 import { db } from '@/plugins/firebase';
@@ -86,6 +87,7 @@ import { useDocument } from 'vuefire';
 import { doc } from 'firebase/firestore';
 import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
 import UserAvatar from '@/components/Base/UserAvatar.vue';
+import CreateDuelModal from '@/components/Duel/CreateDuelModal.vue';
 
 const props = defineProps(["id"]);
 const deck = useDocument(doc(db, "decks", props.id));
@@ -104,6 +106,18 @@ const collapseBody = () => {
 watch(deck, () => {
   searchCards.value = deck?.value?.cards
 })
+
+const openDuelModal = async () => {
+  const modal = await modalController.create({
+    component: CreateDuelModal,
+    componentProps: {
+      modalController: modalController,
+      deck: deck.value
+    },
+    initialBreakpoint: 1.0
+  });
+  modal.present();
+}
 
 </script>
 <style>

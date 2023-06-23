@@ -13,14 +13,9 @@
           <ion-toggle :translucent="true">Focus Mode</ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-select value="en" :label="$t('language')" label-placement="fixed" :aria-label="$t('language')">
-            <ion-select-option value="en">{{
-              $t("english")
-            }}</ion-select-option>
-            <ion-select-option value="de">{{ $t("german") }}</ion-select-option>
-            <ion-select-option value="es">{{
-              $t("spanish")
-            }}</ion-select-option>
+          <ion-select @ionChange="setLanguage" :value="settings.language" :label="$t('language')" label-placement="fixed"
+            :aria-label="$t('language')">
+            <ion-select-option v-for="lang in languages" :value="lang.val">{{ lang.text }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item button id="open-modal" expand="block">
@@ -114,18 +109,28 @@ import { collection, doc, query, where, addDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
 import { useCollection } from "vuefire";
 
+const { t, locale } = useI18n();
 const userStore = useUserStore();
-const userProfile = ref("");
-const userName = ref("");
+const userProfile = ref('');
+const settings = ref('');
 const router = useRouter();
+const languages = [{ val: "en", text: t('english') }, { val: "de", text: t('german') }, { val: "es", text: t('spanish') }]
 const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
 
 onBeforeMount(async () => {
   userProfile.value = await userStore.fetchLoggedInUserProfile();
+  settings.value = await userStore.getSettings;
 });
 
 const logOut = () => {
   userStore.logOut();
+  router.push('/login');
+}
+
+const setLanguage = (event) => {
+  const lang = event.detail.value;
+  locale.value = lang;
+  userStore.setLanguage(lang);
   router.push("/login");
 };
 const addFriend = async () => {
