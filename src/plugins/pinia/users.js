@@ -146,6 +146,9 @@ export const useUserStore = defineStore("user", {
     setLanguage(language) {
       this.settings.language = language;
     },
+    setImage(image) {
+      this.user.image = image;
+    },
   },
 });
 

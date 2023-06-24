@@ -1,7 +1,7 @@
 <template>
-  <ion-page style="--background: green">
+  <ion-page ref="page">
     <ion-content :fullscreen="true">
-      <div class="userAvatarArea">
+      <div class="userAvatarArea" @click="openModal">
         <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" />
       </div>
       <div class="userData">
@@ -103,6 +103,7 @@ import { onBeforeMount, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import UserAvatarsList from "@/components/Base/UserAvatarsList.vue";
 import UserAvatar from "@/components/Base/UserAvatar.vue";
+import AvatarModal from "@/components/Base/AvatarModal.vue";
 import FriendsRequestList from "@/components/FriendRequests/FriendsRequestList.vue";
 import { useUserStore } from "@/plugins/pinia/users";
 import { useRouter } from "vue-router";
@@ -112,15 +113,16 @@ import { useCollection } from "vuefire";
 
 const { t, locale } = useI18n();
 const userStore = useUserStore();
-const userProfile = ref('');
+const userProfile = userStore.getLoggedInUserProfile;
 const userName = ref('');
 const settings = ref('');
+const page = ref();
 const router = useRouter();
 const languages = [{ val: "en", text: t('english') }, { val: "de", text: t('german') }, { val: "es", text: t('spanish') }]
 const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
 
 onBeforeMount(async () => {
-  userProfile.value = await userStore.fetchLoggedInUserProfile();
+  //userProfile.value = await userStore.fetchLoggedInUserProfile();
   settings.value = await userStore.getSettings;
 });
 
@@ -155,9 +157,23 @@ const addFriend = async () => {
     }
   }
 };
-
+const openModal = async () => {
+  const modal = await modalController.create({
+    component: AvatarModal,
+    componentProps: {
+      modalController: modalController,
+      user: userProfile.value,
+    },
+    presentingElement: page.value.$el,
+  });
+  modal.present();
+  modal.onWillDismiss()
+    .then((image) => {
+      userProfile.image = image.data;
+    });
+}
 const cancel = () => {
-  return modalController.dismiss(null, "cancel");
+  return modalController.dismiss(null);
 };
 </script>
 

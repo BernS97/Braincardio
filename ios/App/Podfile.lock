@@ -1,5 +1,5 @@
 PODS:
-  - Capacitor (5.0.4):
+  - Capacitor (5.0.5):
     - CapacitorCordova
   - CapacitorApp (5.0.0):
     - Capacitor
@@ -7,8 +7,8 @@ PODS:
     - Capacitor
   - CapacitorCommunityTextToSpeech (3.0.0):
     - Capacitor
-  - CapacitorCordova (5.0.4)
-  - CapacitorHaptics (5.0.0):
+  - CapacitorCordova (5.0.5)
+  - CapacitorHaptics (5.0.4):
     - Capacitor
   - CapacitorKeyboard (5.0.0):
     - Capacitor
@@ -49,12 +49,12 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  Capacitor: d3d4463573438b9fa65326d1f3549da6f4c21634
+  Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
   CapacitorApp: 16e189e0463976060ccf34868e3083858c977e2b
   CapacitorCommunitySpeechRecognition: b404ef82fa846dd48f6417eb0c47955645ca0996
   CapacitorCommunityTextToSpeech: 8ab921460746482ac9381170ea97a76b73f18049
-  CapacitorCordova: b1fe6bf1f36974a8e4a9044b342d22d49c0996d6
-  CapacitorHaptics: a7d1a6be8d84bcb2749bad57230a8b9e8cdcef7c
+  CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
+  CapacitorHaptics: e36653b37326d71bb35ae42b944124037dbc3d97
   CapacitorKeyboard: 8a25a4241b74f69d457a7e81220a54c22214a679
   CapacitorSplashScreen: 22779612c60d1cb2e4f143fdbc096e7056450386
   CapacitorStatusBar: 7ff77f2b22a52a93a140d1b2dede027bfb7d705f

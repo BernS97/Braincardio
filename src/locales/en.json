@@ -91,5 +91,8 @@
   "hello": "Hello, {name}! 👋",
   "deckDeleted": "Deck deleted!",
   "turns": "Turns",
-  "create": "Create"
+  "create": "Create",
+  "avatar": "Avatar",
+  "emoji": "Emoji",
+  "background": "Background"
 }
