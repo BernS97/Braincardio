@@ -87,10 +87,7 @@ export const useUserStore = defineStore("user", {
         await signInWithEmailAndPassword(getAuth(), email, password).then(
           async (response) => {
             if (response) {
-              this.setUser(response.user);
-              await this.getUserForLogin(response.user.uid);
-              this.setLoggedIn(true);
-              return this.user;
+              return await this.getUserForLogin(response.user.uid);
             } else {
               throw new Error("login failed");
             }
@@ -102,10 +99,13 @@ export const useUserStore = defineStore("user", {
       const { data: userQuery, promise } = useCollection(
         query(collection(db, "users"), limit(1), where("authId", "==", authId))
       );
-      promise.value.then(() => {
+      return promise.value.then(() => {
         const user = { ...userQuery.value[0] };
         user.id = userQuery.value[0].id;
         this.user = user;
+        this.setUser(user);
+        this.setLoggedIn(true);
+        return this.user;
       });
     },
     async logOut() {

@@ -28,14 +28,26 @@
                 {{ $t('drawText') }}
             </ion-card-content>
         </ion-card>
-
-
+        <ion-list :inset="true">
+            <ion-list-header>
+                <ion-label>{{ $t('turns') }}</ion-label>
+            </ion-list-header>
+            <ion-item v-for="turn in duel.turns">
+                <div slot="start" v-if="turn?.user?.image">
+                    <user-avatar class="small avatar" :userProfile="turn?.user" />
+                </div>
+                <ion-label v-html="turn?.card.question"></ion-label>
+                <ion-icon class="decline" :icon="closeOutline" color="danger" slot="end" v-if="turn.result === 0" />
+                <ion-icon class="accept" :icon="checkmarkOutline" color="success" slot="end" v-if="turn.result === 1" />
+            </ion-item>
+        </ion-list>
     </ion-content>
 </template>
 <script setup>
-import { IonContent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, IonCardHeader, IonRow, IonCol } from '@ionic/vue';
+import { IonContent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, IonCardHeader, IonRow, IonCol, IonList, IonListHeader, IonItem, IonIcon, IonLabel } from '@ionic/vue';
 import UserAvatar from "@/components/Base/UserAvatar.vue";
 import { onMounted, ref } from "vue";
+import { checkmarkOutline, closeOutline } from "ionicons/icons";
 import JSConfetti from 'js-confetti'
 
 const jsConfetti = new JSConfetti();
@@ -44,6 +56,9 @@ const props = defineProps(["duel"]);
 const winner = ref(null);
 props.duel.users.forEach(user => {
     const corrects = props.duel.turns.filter((turn) => turn.userId == user.id && turn.result == 1).length;
+    props.duel.turns.map((turn) => {
+        turn.user = props.duel.users.filter((user) => user.id === turn.userId)[0];
+    });
     if (!winner.value || winner.value.corrects < winner?.value?.corrects)
         winner.value = {
             corrects: corrects,

@@ -7,7 +7,7 @@
       <h1>{{ $t('welcomeBack') }}</h1>
       <form>
         <div class="inputWrapper">
-          <input fill="outline" :placeholder="$t('username')" type="email" v-model="email" />
+          <input fill="outline" :placeholder="$t('email')" type="email" v-model="email" />
         </div>
         <div class="inputWrapper">
           <input fill="outline" :placeholder="$t('password')" type="password" v-model="password" />

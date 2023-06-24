@@ -89,5 +89,6 @@
   "drawText": "",
   "draw": "Draw",
   "hello": "Hello, {name}! 👋",
-  "deckDeleted": "Deck deleted!"
+  "deckDeleted": "Deck deleted!",
+  "turns": "Turns"
 }
