@@ -28,7 +28,7 @@ const myValue = computed({
     },
 });
 
-function resizeImage(base64Str) {
+const resizeImage = async (base64Str, size) => {
 
     var img = new Image();
     img.src = base64Str;
@@ -51,9 +51,20 @@ function resizeImage(base64Str) {
     }
     canvas.width = width;
     canvas.height = height;
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, width, height);
-    return canvas.toDataURL();
+    return new Promise((resolve) => {
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const quality = (1000000 / size) * 100;
+        ctx.canvas.toBlob((blob) => {
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function () {
+                resolve(reader.result);
+            }
+        }, "image/png", quality <= 0 || quality > 100 ? 100 : quality);
+    }).then((base64) => {
+        return base64;
+    })
 }
 
 const toolbarOptions = [[{ 'header': [1, 2, 3, false] }], ['bold', 'italic', 'underline'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['image']];
@@ -62,11 +73,11 @@ const modules = {
     module: ImageUploader,
     options: {
         upload: file => {
-            return new Promise((resolve, reject) => {
+            return new Promise(async (resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = function () {
-                    const base64 = resizeImage(reader.result);
+                reader.onload = async () => {
+                    const base64 = await resizeImage(reader.result, file.size);
                     resolve(base64);
                 };
                 reader.onerror = function (error) {

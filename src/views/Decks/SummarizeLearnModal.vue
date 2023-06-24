@@ -17,7 +17,8 @@
           <ion-label>{{ $t('cards') }}</ion-label>
         </ion-list-header>
         <ion-item v-for="card in statistics?.cards" :key="card.id">
-          <span :class="[{ 'right': card.result == 1, 'wrong': card.result == 0 }, 'status']"></span>{{ card.question }}
+          <span :class="[{ 'right': card.result == 1, 'wrong': card.result == 0 }, 'status']"></span>
+          <div v-html="card.question"></div>
         </ion-item>
       </ion-list>
     </ion-content>
