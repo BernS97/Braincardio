@@ -16,7 +16,7 @@
           <ion-label>{{ $t('cards') }}</ion-label>
         </ion-list-header>
         <ion-item v-for="card in cards" :key="card.id" @click="chooseCard(card)">
-          {{ card.question }}
+          <div v-html="card.question"></div>
         </ion-item>
       </ion-list>
     </ion-content>

@@ -90,5 +90,6 @@
   "draw": "Draw",
   "hello": "Hello, {name}! 👋",
   "deckDeleted": "Deck deleted!",
-  "turns": "Turns"
+  "turns": "Turns",
+  "create": "Create"
 }

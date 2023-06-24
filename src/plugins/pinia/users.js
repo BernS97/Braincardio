@@ -87,7 +87,8 @@ export const useUserStore = defineStore("user", {
         await signInWithEmailAndPassword(getAuth(), email, password).then(
           async (response) => {
             if (response) {
-              return await this.getUserForLogin(response.user.uid);
+              const user = await this.getUserForLogin(response.user.uid);
+              return user;
             } else {
               throw new Error("login failed");
             }

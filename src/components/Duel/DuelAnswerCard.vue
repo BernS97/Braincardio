@@ -6,7 +6,7 @@
             </ion-card-header>
 
             <ion-card-content>
-                {{ currentTurn?.card?.question }}
+                <div v-html="currentTurn?.card.question"></div>
             </ion-card-content>
         </ion-card>
         <card-editor v-model="answer" :placeholder="$t('answer')" :title="$t('yourAnswer')" />
