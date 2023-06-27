@@ -27,7 +27,7 @@
           <pagination />
         </template>
       </carousel>
-      <ion-list :inset="true">
+      <ion-list class="duelList" :inset="true">
         <ion-list-header>
           <ion-label>{{ $t('duels') }}</ion-label>
         </ion-list-header>
@@ -100,5 +100,9 @@ onBeforeMount(async () => {
 
 #helloText {
   font-size: 28px;
+}
+
+ion-list.duelList {
+  padding-bottom: 16px;
 }
 </style>

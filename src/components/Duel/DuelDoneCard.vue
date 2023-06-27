@@ -1,6 +1,6 @@
 <template>
     <ion-content :scroll-y="false" :fullscreen="true" v-if="duel?.done">
-        <ion-card v-if="winner?.user" class="winner" @click="addConfetti">
+        <ion-card v-if="winner?.user" class="winner" @click="addConfetti(emojis)">
             <user-avatar :userProfile="winner?.user" />
             <ion-card-header>
                 <ion-card-title>{{ winner?.user?.name }}</ion-card-title>
@@ -54,28 +54,33 @@ const jsConfetti = new JSConfetti();
 
 const props = defineProps(["duel"]);
 const winner = ref(null);
+let emojis = [];
 props.duel.users.forEach(user => {
     const corrects = props.duel.turns.filter((turn) => turn.userId == user.id && turn.result == 1).length;
     props.duel.turns.map((turn) => {
         turn.user = props.duel.users.filter((user) => user.id === turn.userId)[0];
     });
-    if (!winner.value || winner.value.corrects < winner?.value?.corrects)
+    if (!winner.value || winner.value.corrects < corrects) {
         winner.value = {
             corrects: corrects,
             user: user,
         }
+    }
+    emojis.push(user.image.emoji);
 });
 
 onMounted(() => {
-    addConfetti();
-    addConfetti();
-    addConfetti();
+    if (winner.value.user)
+        emojis = [winner.value.user.image.emoji];
+    addConfetti(emojis);
+    addConfetti(emojis);
+    addConfetti(emojis);
 })
 
-const addConfetti = () => {
+const addConfetti = (emojis) => {
     jsConfetti.addConfetti(
         {
-            emojis: [winner.value.user.image.emoji]
+            emojis: [emojis]
         });
 }
 </script>
