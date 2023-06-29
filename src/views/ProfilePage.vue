@@ -1,5 +1,5 @@
 <template>
-  <ion-page ref="page">
+  <ion-page ref="page" v-if="userProfile">
     <ion-content :fullscreen="true">
       <div class="userAvatarArea" @click="openModal">
         <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" />
@@ -45,7 +45,7 @@
                         <ion-label>{{ user?.name }}</ion-label>
                       </ion-item>
                       <ion-item-options>
-                        <ion-item-option color="danger" @click="removeUser(user.id)">{{ $t("delete") }}</ion-item-option>
+                        <ion-item-option color="danger" @click="removeFriend(user)">{{ $t("delete") }}</ion-item-option>
                       </ion-item-options>
                     </ion-item-sliding>
                   </div>
@@ -107,13 +107,13 @@ import AvatarModal from "@/components/Base/AvatarModal.vue";
 import FriendsRequestList from "@/components/FriendRequests/FriendsRequestList.vue";
 import { useUserStore } from "@/plugins/pinia/users";
 import { useRouter } from "vue-router";
-import { collection, doc, query, where, addDoc } from "firebase/firestore";
+import { collection, doc, query, where, addDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
 import { useCollection } from "vuefire";
 
 const { t, locale } = useI18n();
 const userStore = useUserStore();
-const userProfile = userStore.getLoggedInUserProfile;
+const userProfile = ref();
 const userName = ref('');
 const settings = ref('');
 const page = ref();
@@ -122,7 +122,7 @@ const languages = [{ val: "en", text: t('english') }, { val: "de", text: t('germ
 const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
 
 onBeforeMount(async () => {
-  //userProfile.value = await userStore.fetchLoggedInUserProfile();
+  userProfile.value = await userStore.fetchLoggedInUserProfile();
   settings.value = await userStore.getSettings;
 });
 
@@ -156,6 +156,23 @@ const addFriend = async () => {
       console.log("Sent."); //TODO: at toast message.
     }
   }
+};
+const removeFriend = async (friend) => {
+
+  //add friends;
+  userProfile.value.friends = userProfile.value.friends.filter((user) => user.id !== friend.id);
+  const userProfileFriends = userProfile.value.friends.map((user) => {
+    if (user.id) return doc(db, "users", user.id);
+  });
+
+  friend.friends = friend.friends.filter((user) => user.id !== userProfile.value.id);
+  const removeUserFriends = friend.friends.map((user) => {
+    if (user.id) return doc(db, "users", user.id);
+  });
+
+  await updateDoc(doc(db, "users", friend.id), { friends: removeUserFriends });
+  await updateDoc(doc(db, "users", userProfile.value.id), { friends: userProfileFriends });
+
 };
 const openModal = async () => {
   const modal = await modalController.create({

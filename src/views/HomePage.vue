@@ -36,7 +36,10 @@
             <div slot="start">
               <user-avatar class="small avatar" :userProfile="duel?.users[0]" />
             </div>
-            {{ duel.name }}
+            <ion-label>
+              <h3>{{ duel.name }}</h3>
+              <p>{{ duel.deck.name }}</p>
+            </ion-label>
             <div slot="end">
               <user-avatar class="small avatar" :userProfile="duel?.users[1]" />
             </div>
