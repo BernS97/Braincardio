@@ -149,7 +149,7 @@ const addFriend = async () => {
     if (friend) {
       const friendRequest = {
         approved: null,
-        from: doc(db, "users", userProfile.value.id),
+        from: doc(db, "users", userProfile.id),
         to: doc(db, "users", friend.id),
       };
       addDoc(collection(db, "friendRequests"), friendRequest);

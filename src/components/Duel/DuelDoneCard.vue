@@ -11,13 +11,17 @@
                 {{ $t('winnerText') }}
             </ion-card-content>
         </ion-card>
-        <ion-card v-else>
+        <ion-card v-else @click="addConfetti(emojis)">
             <ion-row>
                 <ion-col>
-                    <user-avatar :userProfile="duel?.users[0]" />
+                    <div :style="{ backgroundImage: duel?.users[0].image.background }">
+                        <div class="userAvatarEmoji">{{ duel?.users[0].image.emoji }}</div>
+                    </div>
                 </ion-col>
                 <ion-col>
-                    <user-avatar :userProfile="duel?.users[1]" />
+                    <div :style="{ backgroundImage: duel?.users[1].image.background }">
+                        <div class="userAvatarEmoji">{{ duel?.users[1].image.emoji }}</div>
+                    </div>
                 </ion-col>
             </ion-row>
             <ion-card-header>
@@ -66,11 +70,13 @@ props.duel.users.forEach(user => {
             user: user,
         }
     }
+    else if (winner.value.corrects == corrects)
+        winner.value = null;
     emojis.push(user.image.emoji);
 });
 
 onMounted(() => {
-    if (winner.value.user)
+    if (!Array.isArray(winner.value))
         emojis = [winner.value.user.image.emoji];
     addConfetti(emojis);
     addConfetti(emojis);
@@ -84,9 +90,17 @@ const addConfetti = (emojis) => {
         });
 }
 </script>
-<style>
+<style lang="scss">
 .winner .userAvatarBackground {
     border-radius: 0;
     width: 100%;
+}
+
+ion-col {
+    padding: 0;
+
+    &>div {
+        height: 200px;
+    }
 }
 </style>

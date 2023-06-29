@@ -12,7 +12,7 @@
     </ion-header>
 
     <duel-done-card v-if="duel?.done" :duel="duel" />
-    <duel-lobby-page v-if="!ready && !duel?.done" :duel="duel" :actives="actives" />
+    <duel-lobby-page v-if="!duel?.done && started !== true" :duel="duel" :actives="actives" />
     <duel-answer-card v-if="ready && !duel?.done && myTurn && currentTurn?.card && currentTurn.userAnswer == null"
       :duel="duel" :currentTurn="currentTurn" :myTurn="myTurn" @answerCard="answerCard" />
     <duel-rate-answer-card
@@ -21,13 +21,15 @@
     <loading-pop-up v-if="rateLoading" text="Waiting for rating" />
     <loading-pop-up v-if="answerLoading" text="Waiting for answering" />
     <loading-pop-up v-if="cardLoading" text="Waiting for card" />
+    <div class="countdown" v-if="ready && !started">
+      {{ count }}
+    </div>
   </ion-page>
 </template>
 
 <script setup>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, modalController } from '@ionic/vue';
-import { defineComponent, onBeforeMount, computed, watch, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onBeforeMount, computed, watch, ref } from 'vue';
 import { useDocument } from "vuefire";
 import { db } from "@/plugins/firebase";
 import { doc, updateDoc } from 'firebase/firestore';
@@ -39,12 +41,14 @@ import DuelDoneCard from "@/components/Duel/DuelDoneCard.vue";
 import LoadingPopUp from "@/components/Base/LoadingPopUp.vue";
 import DuelLobbyPage from "@/components/Duel/DuelLobbyPage.vue";
 const props = defineProps(["id"]);
-const router = useRouter();
 const page = ref();
 const actives = ref([]);
 const userStore = useUserStore();
 const userId = userStore.getLoggedInUserProfile.id;
 const oponent = ref();
+const started = ref(false);
+const count = ref(3);
+let interval = null;
 const { data: duel, promise } = useDocument(doc(db, "duels", props.id));
 
 const hasCard = computed(() => {
@@ -68,6 +72,21 @@ const remainingTurns = computed(() => {
 const ready = computed(() => { return duel?.value?.actives?.filter((el) => el.ready == true)?.length == 2 });
 const myTurn = computed(() => { return duel?.value?.turns && currentTurn.value?.userId == userId });
 
+
+const countDownTimer = () => {
+  return new Promise((resolve) => {
+    interval = setInterval(() => {
+      if (count.value > 0)
+        count.value--;
+      else if (count.value === 0) {
+        started.value = true;
+        resolve();
+      }
+    }, 1000)
+  });
+}
+
+
 watch(remainingTurns, () => {
   if (remainingTurns.value == 0) {
     duel.value.done = true;
@@ -80,8 +99,14 @@ watch(remainingTurns, () => {
 watch(ready, () => {
   if (ready.value == true)
     promise.value.then(() => {
-      if (!duel?.value?.done)
-        startGame();
+      if (!duel?.value?.done) {
+        countDownTimer().then(() => {
+          if (started.value) {
+            clearInterval(interval);
+            startGame();
+          }
+        })
+      }
     });
 })
 
@@ -160,6 +185,7 @@ const addTurn = (card) => {
 onBeforeMount(() => {
   promise.value.then(() => {
     oponent.value = duel.value.users.find(el => el.id != userId);
+    started.value = duel?.value?.actives?.filter((el) => el.ready == true)?.length == 2;
     actives.value = duel.value.actives.map((active) => {
       if (active.userId == userStore.getLoggedInUserProfile.id && !active.ready)
         active.ready = true;
@@ -196,5 +222,19 @@ ion-spinner {
   height: 75px;
   bottom: 50%;
 
+}
+
+.countdown {
+  position: absolute;
+  font-size: 75px;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333;
+  opacity: 0.65;
 }
 </style>
