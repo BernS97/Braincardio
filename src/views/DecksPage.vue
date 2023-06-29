@@ -4,6 +4,10 @@
       <ion-toolbar>
         <ion-title>{{ $t('decks') }}</ion-title>
       </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar :debounce="20" @keydown="handleSearch($event.target.value.toLowerCase())" :animated="true"
+          :placeholder="$t('search')"></ion-searchbar>
+      </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
@@ -22,21 +26,16 @@
         </ion-toolbar>
       </ion-header>
       <deck-card v-for="deck in searchDecks" :key="deck.id" :deck="deck" />
-      <ion-fab>
-        <ion-fab-button @click="router.push('/decks/create')">
-          <ion-icon :icon="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup>
-import { IonAvatar, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonFab, IonFabButton, IonSearchbar } from '@ionic/vue';
+import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonSearchbar } from '@ionic/vue';
 import { ref, watch } from "vue";
 import { notificationsOutline, add } from 'ionicons/icons';
 import { useCollection } from "vuefire";
-import { db } from "@/plugins/firebase.js"
+import { db } from "@/plugins/firebase.js";
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/plugins/pinia/users';
 import {
@@ -67,21 +66,5 @@ const handleSearch = (search) => {
 ion-avatar {
   width: 32px;
   height: 32px;
-}
-
-#circle {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  background: red;
-}
-
-ion-fab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  position: absolute;
-  bottom: 100px;
 }
 </style>

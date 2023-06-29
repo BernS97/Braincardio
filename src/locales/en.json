@@ -95,5 +95,6 @@
   "avatar": "Avatar",
   "emoji": "Emoji",
   "background": "Background",
-  "details": "Details"
+  "details": "Details",
+  "focusMode": "Focus Mode"
 }

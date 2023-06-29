@@ -17,8 +17,8 @@ const props = defineProps(["userProfile", "badge"]);
 
 <style lang="scss">
 .userAvatarBackground {
-  height: 200px;
-  width: 200px;
+  width: 150px;
+  height: 150px;
   margin: auto;
   border: 1px solid #ddd;
   border-radius: 50%;
@@ -38,7 +38,7 @@ const props = defineProps(["userProfile", "badge"]);
 
 ion-badge.levelBadge {
   position: relative;
-  left: 160px;
-  bottom: 160px;
+  left: 115px;
+  bottom: 130px;
 }
 </style>

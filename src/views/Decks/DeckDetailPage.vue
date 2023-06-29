@@ -14,10 +14,6 @@
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar :debounce="20" @keydown="handleChange($event)" :animated="true"
-          :placeholder="$t('search')"></ion-searchbar>
-      </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" v-if="deck">
       <ion-header collapse="condense">
@@ -25,11 +21,6 @@
           <ion-title size="large">
             <span v-if="deck">{{ deck.name }}</span>
           </ion-title>
-
-        </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar :debounce="20" @keydown="handleChange($event)" :animated="true"
-            :placeholder="$t('search')"></ion-searchbar>
         </ion-toolbar>
       </ion-header>
       <ion-list :inset="true" v-if="deck">
@@ -68,6 +59,8 @@
           <ion-button @click="router.push('/learn/' + id)">{{ $t('learn') }}</ion-button>
           <ion-button @click="openDuelModal">{{ $t('newDuel') }}</ion-button>
         </ion-list-header>
+        <ion-searchbar :debounce="20" @keydown="handleChange($event)" :animated="true"
+          :placeholder="$t('search')"></ion-searchbar>
         <ion-item v-for="card in searchCards" :key="card">
           <ion-label>
             <div v-html="card?.question"></div>
