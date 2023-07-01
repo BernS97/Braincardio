@@ -75,8 +75,6 @@ ion-tab-bar {
 }
 
 ion-header {
-    padding-top: constant(safe-area-inset-top);
-    padding-top: env(safe-area-inset-top);
     --ion-safe-area-top: 40px;
     --ion-safe-area-bottom: 40px;
 }

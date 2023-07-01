@@ -2,7 +2,7 @@
   <div v-if="userProfile.image" class="userAvatarBackground" :style="{ backgroundImage: userProfile.image.background }">
     <div class="userAvatarEmoji">{{ userProfile.image.emoji }}</div>
     <ion-badge class="levelBadge" v-if="badge">
-      {{ $t('level') }} {{ userProfile.level }}
+      {{ $t('level') }} {{ level }}
     </ion-badge>
   </div>
 </template>
@@ -13,6 +13,7 @@ import {
 } from '@ionic/vue';
 const props = defineProps(["userProfile", "badge"]);
 
+const level = (props.userProfile.experience / 1000) + 1;
 </script>
 
 <style lang="scss">

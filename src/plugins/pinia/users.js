@@ -29,7 +29,7 @@ export const useUserStore = defineStore("user", {
       name: null,
       email: null,
       image: null,
-      level: null,
+      experience: null,
       friends: [],
     }),
     userData: null,
@@ -77,7 +77,7 @@ export const useUserStore = defineStore("user", {
           background:
             "linear-gradient(136.78deg, rgb(255, 215, 178) 10.55%, rgb(252, 165, 191) 85.16%)",
         },
-        level: 1,
+        experience: 0,
         friends: [],
       };
       await addDoc(collection(db, "users"), user);
