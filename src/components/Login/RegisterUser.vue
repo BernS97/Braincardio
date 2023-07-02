@@ -1,5 +1,12 @@
 <template>
     <ion-page>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button @click="cancel()">{{ $t('cancel') }}</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
         <ion-content :fullscreen="true">
             <ion-header collapse="condense">
                 <ion-toolbar>
@@ -76,6 +83,10 @@ const Register = async () => {
             await toast.present();
         }
     }
+}
+
+const cancel = () => {
+    props.modalController.dismiss();
 }
 
 </script>

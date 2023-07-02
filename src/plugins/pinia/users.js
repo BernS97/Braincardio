@@ -132,7 +132,7 @@ export const useUserStore = defineStore("user", {
       );
       await promise.value;
       this.user = user;
-      return this.user;
+      return user;
     },
     setLoggedIn(value) {
       this.loggedIn = value;

@@ -2,7 +2,7 @@
   <ion-page ref="page" v-if="userProfile">
     <ion-content :fullscreen="true" :scroll-y="false">
       <div class="userAvatarArea">
-        <user-avatar v-if="userProfile" :userProfile="userProfile" :badge="true" @click="openModal" />
+        <user-avatar :userProfile="userProfile" :badge="true" @click="openModal" />
         <div class="userData">
           <h2>{{ userProfile.email }}</h2>
           <h1>{{ userProfile.name }}</h1>
@@ -20,7 +20,8 @@
         </ion-item>
         <ion-item button id="open-modal" expand="block">
           <ion-label>{{ $t("friends") }}</ion-label>
-          <user-avatars-list v-if="userProfile" :users="userProfile.friends"></user-avatars-list>
+          <user-avatars-list v-if="userProfile.friends.every(value => { return typeof value == 'object' })"
+            :users="userProfile.friends" />
           <ion-modal ref="modal" trigger="open-modal">
             <ion-page>
               <ion-header>
@@ -110,11 +111,11 @@ import { useUserStore } from "@/plugins/pinia/users";
 import { useRouter } from "vue-router";
 import { collection, doc, query, where, addDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
-import { useCollection } from "vuefire";
+import { useCollection, useDocument } from "vuefire";
 
 const { t, locale } = useI18n();
 const userStore = useUserStore();
-const userProfile = ref();
+const userProfile = useDocument(doc(db, "users", userStore.getLoggedInUserProfile.id));
 const userName = ref('');
 const settings = ref('');
 const page = ref();
@@ -123,7 +124,7 @@ const languages = [{ val: "en", text: t('english') }, { val: "de", text: t('germ
 const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
 
 onBeforeMount(async () => {
-  userProfile.value = await userStore.fetchLoggedInUserProfile();
+  //userProfile = await userStore.fetchLoggedInUserProfile();
   settings.value = await userStore.getSettings;
 });
 
@@ -143,7 +144,7 @@ const addFriend = async () => {
     console.log("Adding own user is not possible."); //TODO: at toast message.
   else {
     const { data: users, promise } = useCollection(
-      query(collection(db, "users"), where("name", "==", userName.value)) //TODO(!) this does not work!
+      query(collection(db, "users"), where("name", "==", userName.value))
     );
     await promise.value;
     const friend = users.value[0];
@@ -160,7 +161,6 @@ const addFriend = async () => {
 };
 const removeFriend = async (friend) => {
 
-  //add friends;
   userProfile.value.friends = userProfile.value.friends.filter((user) => user.id !== friend.id);
   const userProfileFriends = userProfile.value.friends.map((user) => {
     if (user.id) return doc(db, "users", user.id);
