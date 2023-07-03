@@ -1,36 +1,40 @@
 <template>
-    <ion-page v-if="route.fullPath != '/login' && route.fullPath != '/'">
+    <ion-page>
         <ion-fab v-if="route.fullPath === '/decks'">
             <ion-fab-button @click="router.push('/decks/create')">
                 <ion-icon :icon="add"></ion-icon>
             </ion-fab-button>
         </ion-fab>
-        <ion-tabs class="translucent">
+        <ion-tabs v-if="route.fullPath != '/login' && route.fullPath != '/'" class="translucent">
             <ion-router-outlet></ion-router-outlet>
-            <ion-tab-bar class="translucent" slot="bottom">
-                <ion-tab-button tab="home" href="/home">
-                    <ion-badge color="primary" v-if="duels?.length != 0">{{ duels.length }}</ion-badge>
-                    <ion-icon :icon="archive" />
-                    <ion-label>{{ t('home') }}</ion-label>
-                </ion-tab-button>
 
-                <ion-tab-button tab="decks" href="/decks">
-                    <ion-icon :icon="logoBuffer" />
-                    <ion-label>{{ t('decks') }}</ion-label>
-                </ion-tab-button>
-                <ion-tab-button tab="profile" href="/profile">
-                    <ion-badge color="primary" v-if="friendRequests?.length != 0">{{ friendRequests.length }}</ion-badge>
-                    <ion-icon :icon="personCircle" />
-                    <ion-label>{{ t('profile') }}</ion-label>
-                </ion-tab-button>
-            </ion-tab-bar>
+            <div id="tabWrapper">
+                <ion-tab-bar class="translucent" slot="bottom">
+                    <ion-tab-button tab="home" href="/home">
+                        <ion-badge color="primary" v-if="duels?.length != 0">{{ duels.length }}</ion-badge>
+                        <ion-icon :icon="home" />
+                        <ion-label>{{ t('home') }}</ion-label>
+                    </ion-tab-button>
+
+                    <ion-tab-button tab="decks" href="/decks">
+                        <ion-icon :icon="logoBuffer" />
+                        <ion-label>{{ t('decks') }}</ion-label>
+                    </ion-tab-button>
+                    <ion-tab-button tab="profile" href="/profile">
+                        <ion-badge color="primary" v-if="friendRequests?.length != 0">{{ friendRequests.length
+                        }}</ion-badge>
+                        <ion-icon :icon="personCircle" />
+                        <ion-label>{{ t('profile') }}</ion-label>
+                    </ion-tab-button>
+                </ion-tab-bar>
+            </div>
         </ion-tabs>
     </ion-page>
 </template>
   
 <script setup>
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonBadge, IonFab, IonFabButton, } from '@ionic/vue';
-import { archive, logoBuffer, personCircle } from 'ionicons/icons';
+import { IonPage, IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonRouterOutlet, IonBadge, IonFab, IonFabButton, } from '@ionic/vue';
+import { home, logoBuffer, personCircle } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
@@ -79,11 +83,6 @@ ion-header {
     --ion-safe-area-bottom: 40px;
 }
 
-.tabs-inner {
-    margin-bottom: 50px;
-}
-
-
 #circle {
     border-radius: 50%;
     width: 30px;
@@ -98,6 +97,11 @@ ion-fab {
     width: 100%;
     position: absolute;
     bottom: 115px;
+}
+
+#tabWrapper {
+    background: var(--ion-background-color);
+    height: 70px;
 }
 </style>
   

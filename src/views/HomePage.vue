@@ -108,4 +108,17 @@ onBeforeMount(async () => {
 ion-list.duelList {
   padding-bottom: 16px;
 }
+
+ol.carousel__track {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.carousel__pagination {
+  margin: 0;
+}
+
+.carousel__slide ion-card {
+  margin-bottom: 0;
+}
 </style>

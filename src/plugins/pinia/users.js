@@ -48,6 +48,11 @@ export const useUserStore = defineStore("user", {
     getSettings(state) {
       return state.settings;
     },
+    getLanguage(state) {
+      if (state.settings.language === "de") return "de-DE";
+      if (state.settings.language === "es") return "es-ES";
+      else return "en-US";
+    },
   },
   actions: {
     async register(email, password, name) {

@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button @click="router.push('/home')">{{ $t('close') }}</ion-button>
+          <ion-button @click="close">{{ $t('close') }}</ion-button>
         </ion-buttons>
         <ion-title>{{ $t('summary') }}</ion-title>
       </ion-toolbar>
@@ -16,7 +16,7 @@
         <ion-list-header>
           <ion-label>{{ $t('cards') }}</ion-label>
         </ion-list-header>
-        <ion-item v-for="card in statistics?.cards" :key="card.id">
+        <ion-item v-for="card in statistics?.cards.filter((card) => card.result <= 2)" :key="card.id">
           <span :class="[{ 'right': card.result == 1, 'wrong': card.result == 0 }, 'status']"></span>
           <div v-html="card.question"></div>
         </ion-item>
@@ -77,13 +77,16 @@ onBeforeMount(async () => {
   });
 });
 
+const close = () => {
+  router.push('/home');
+}
+
 </script>
 <style scoped>
 .status {
-  width: 10px;
-  height: 10px;
+  min-width: 5px;
+  height: 100%;
   margin-right: 5px;
-  border-radius: 50%;
   background: #ccc;
 }
 
