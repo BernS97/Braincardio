@@ -31,7 +31,7 @@
         <ion-list-header>
           <ion-label>{{ $t('duels') }}</ion-label>
         </ion-list-header>
-        <div v-if="duels.length > 0">
+        <div v-if="duels.length > 0" id="duelList">
           <ion-item v-for="duel in  duels " :key="duel.id" @click="router.push('/duel/' + duel.id);">
             <div slot="start">
               <user-avatar class="small avatar" :userProfile="duel?.users[0]" />
@@ -120,5 +120,10 @@ ol.carousel__track {
 
 .carousel__slide ion-card {
   margin-bottom: 0;
+}
+
+#duelList {
+  max-height: 175px;
+  overflow: scroll;
 }
 </style>
