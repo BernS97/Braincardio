@@ -11,7 +11,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label>{{ $t("users") }}</ion-label>
-        <user-avatars-list :users="deck.users" />
+        <user-avatars-list v-if="deck?.users[deck?.users.length - 1]?.image" :users="deck?.users" />
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -27,15 +27,20 @@ import {
   IonBadge,
   IonItem,
   IonLabel,
+  toastController
 } from "@ionic/vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import UserAvatarsList from "@/components/Base/UserAvatarsList.vue";
 import CreateDuelModal from '@/components/Duel/CreateDuelModal.vue';
+import {
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "@/plugins/firebase";
 defineProps(["deck"]);
 const { t } = useI18n();
 const router = useRouter();
-useI18n
 
 const presentActionSheet = async (deck) => {
   const actionSheet = await actionSheetController.create({
@@ -45,7 +50,7 @@ const presentActionSheet = async (deck) => {
         text: t('delete'),
         role: 'destructive',
         handler: () => {
-          deleteDeck();
+          deleteDeck(deck);
         }
       },
       {
@@ -82,12 +87,14 @@ const presentActionSheet = async (deck) => {
   await actionSheet.present();
 }
 
-const deleteDeck = async () => {
+const deleteDeck = async (deck) => {
+  const deckId = deck.id;
   router.push("/decks");
-  deck.value.cards.forEach(async (card) => {
-    await deleteDoc(doc(db, "cards", card.id));
+  deck.cards.forEach(async (card) => {
+    const cardId = card.id;
+    await deleteDoc(doc(db, "cards", cardId));
   });
-  await deleteDoc(doc(db, "decks", props.id));
+  await deleteDoc(doc(db, "decks", deckId));
   const toast = await toastController.create({
     message: t("deckDeleted"),
     duration: 3000,

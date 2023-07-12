@@ -86,6 +86,8 @@ const openAvatarModal = async () => {
       modalController: modalController,
       user: userProfile.value,
     },
+    breakpoints: [1],
+    initialBreakpoint: 1.0,
     presentingElement: page.value.$el,
   });
   modal.present();

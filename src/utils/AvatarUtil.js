@@ -2110,12 +2110,15 @@ const emojis = [
 ];
 
 const backgrounds = [
+  "linear-gradient(to right, #339cf8, #00f2fe, #03fef8)",
+  "linear-gradient(to right, #a8ff78, #78ffd6)",
+  "linear-gradient(to right, #fdc830, #f37335)",
+  "linear-gradient(to right, #1f4037, #99f2c8)",
   "linear-gradient(136.78deg, rgb(255, 215, 178) 10.55%, rgb(252, 165, 191) 85.16%)",
   "linear-gradient(136.78deg, rgb(140, 207, 255) 10.55%, rgb(149, 230, 201) 85.16%)",
   "linear-gradient(136.78deg, rgb(255, 242, 128) 10.55%, rgb(165, 225, 164) 85.16%)",
   "linear-gradient(136.78deg, rgb(148, 77, 204) 10.55%, rgb(241, 166, 242) 85.16%)",
   "linear-gradient(136.78deg, rgb(231, 235, 240) 10.55%, rgb(192, 200, 208) 85.16%)",
-  "linear-gradient(136.78deg, rgb(255, 215, 178) 10.55%, rgb(252, 165, 191) 26.09%, rgb(255, 227, 128) 41.63%, rgb(149, 229, 202) 56.79%, rgb(141, 208, 252) 70.78%, rgb(195, 202, 211) 85.16%) 0% 0% / 500% 500%; animation: 25s ease 0s infinite normal none running gradientKeyframes",
 ];
 
 export { backgrounds, emojis };

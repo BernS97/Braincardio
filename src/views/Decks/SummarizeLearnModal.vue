@@ -48,7 +48,7 @@ import { useI18n } from 'vue-i18n';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 ChartJS.register(ArcElement, Tooltip)
-const props = defineProps(["id"]);
+const props = defineProps(["id", "modalcontroller"]);
 const { t } = useI18n();
 const router = useRouter();
 const statistics = ref();
@@ -78,7 +78,7 @@ onBeforeMount(async () => {
 });
 
 const close = () => {
-  router.push('/home');
+  router.push('/decks');
 }
 
 </script>

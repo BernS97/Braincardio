@@ -8,7 +8,6 @@
 
     <ion-card-content @click="flip">
       <div v-if="flipped && !recognisedText" v-html="card.answer"></div>
-      <div v-if="!flipped && recognisedText" v-html="card?.question"></div>
       <div v-if="!flipped && recognisedText">{{ recognisedText }}</div>
       <div class="comparison-container" v-if="flipped && recognisedText">
         <div class="comparison" v-html="card.answer"></div>
@@ -16,12 +15,6 @@
       </div>
     </ion-card-content>
     <div class="card-buttons" v-if="!(flipped && recognisedText)">
-      <ion-button v-if="!speaking" color="primary" fill="clear" @click="speak(flipped ? card.answer : card.question)">
-        {{ $t('speak') }}
-      </ion-button>
-      <ion-button v-if="speaking" color="danger" fill="clear" @click="stopSpeak">
-        {{ $t('stopSpeak') }}
-      </ion-button>
       <ion-button v-if="!listening" color="primary" fill="clear" @click="listen">
         {{ $t('listen') }}
       </ion-button>
@@ -31,27 +24,25 @@
     </div>
   </ion-card>
   <div class="button-bar">
-    <ion-button fill="clear" v-if="currentCard !== 0" @click="previous">
-      {{ $t('prev') }}
+    <ion-button fill="clear" @click="setWrong">
+      <ion-icon color="danger" :icon="closeOutline"></ion-icon>
     </ion-button>
-    <ion-button color="danger" @click="setWrong">
-      {{ $t('wrong') }}
+    <ion-button fill="clear" @click="flip">
+      <ion-icon :icon="eyeOutline" v-if="!flipped"></ion-icon>
+      <ion-icon :icon="eyeOffOutline" v-else></ion-icon>
     </ion-button>
-    <ion-button color="success" @click="setCorrect">
-      {{ $t('correct') }}
-    </ion-button>
-    <ion-button fill="clear" v-if="currentCard + 1 < cards.length" @click="next">
-      {{ $t('next') }}
+    <ion-button fill="clear" @click="setCorrect">
+      <ion-icon color="success" :icon="checkmarkOutline"></ion-icon>
     </ion-button>
   </div>
 </template>
 
 <script setup>
-import { IonButton, IonCard, IonCardTitle, IonCardHeader, IonCardContent } from '@ionic/vue';
+import { IonButton, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonIcon } from '@ionic/vue';
 import { ref } from 'vue';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
-import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { useUserStore } from '@/plugins/pinia/users';
+import { checkmarkOutline, closeOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 const props = defineProps(["cards", "total", "language"]);
 const emits = defineEmits(["cardRejected", "cardAccepted", "cardSkipped", "previous"]);
 const userStore = useUserStore();
@@ -68,23 +59,14 @@ SpeechRecognition.requestPermission().then(() => console.log('Granted'));
 const flip = function () {
   flipped.value = !flipped.value;
 };
-const previous = function () {
-  flipped.value = false;
-  currentCard.value--;
-  card.value = props.cards[currentCard.value];
-  recognisedText.value = null;
-  emits('previous', currentCard.value);
-};
+
 const forward = function () {
   flipped.value = false;
   currentCard.value++;
   card.value = props.cards[currentCard.value];
   recognisedText.value = null;
 };
-const next = function () {
-  emits('cardSkipped', currentCard.value);
-  forward();
-};
+
 const setCorrect = function () {
   emits('cardAccepted', currentCard.value);
   forward();
@@ -126,20 +108,6 @@ const stopListen = async () => {
 const permission = () => {
   SpeechRecognition.hasPermission()
     .then((hasPermission) => console.log(hasPermission))
-}
-
-const speak = async (text) => {
-  speaking.value = true;
-  const cleanedText = text.replace(/(<([^>]+)>)/ig, '').replace('\n', '');
-  await TextToSpeech.speak({
-    text: cleanedText,
-    lang: 'en-US',
-  });
-  speaking.value = false;
-}
-const stopSpeak = async () => {
-  speaking.value = false;
-  await TextToSpeech.stop();
 }
 
 </script>
@@ -188,6 +156,8 @@ ion-card-content {
   height: 45%;
   border: 1px solid;
   margin-bottom: 5px;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .comparison-container {
@@ -200,7 +170,7 @@ ion-card-content {
   width: 90%;
   transform: translate(-50%, -50%);
   left: 50%;
-  border-radius: 30px;
+  border-radius: 20px;
   padding-bottom: 0;
   border: 1px solid rgba(2, 52, 54, 0.08);
   height: 60px;

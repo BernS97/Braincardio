@@ -1,5 +1,5 @@
 <template>
-    <ion-content :scroll-y="false" :fullscreen="true">
+    <ion-content :scroll-y="true" :fullscreen="true">
         <ion-card v-if="myTurn && currentTurn?.card">
             <ion-card-header>
                 <ion-card-title>{{ $t('question') }}</ion-card-title>
@@ -20,7 +20,7 @@ import { IonContent, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonBu
 import { ref } from 'vue';
 import CardEditor from '@/components/Base/CardEditor.vue';
 defineProps(["duel", "myTurn", "currentTurn"]);
-const emit = defineEmits(["duel", "myTurn", "currentTurn"]);
+const emit = defineEmits(["duel", "myTurn", "currentTurn", "answerCard"]);
 const answer = ref("");
 
 const answerCard = () => {

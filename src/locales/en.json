@@ -62,7 +62,7 @@
   "delete": "Delete",
   "speak": "speak",
   "stopSpeak": "Stop Speak",
-  "listen": "listen",
+  "listen": "Listen",
   "stopListen": "Stop listen",
   "prev": "Prev",
   "right": "Right",
@@ -96,5 +96,6 @@
   "emoji": "Emoji",
   "background": "Background",
   "details": "Details",
-  "focusMode": "Focus Mode"
+  "focusMode": "Focus Mode",
+  "chooseCard": "Choose card"
 }

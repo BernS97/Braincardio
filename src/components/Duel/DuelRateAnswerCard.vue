@@ -1,5 +1,5 @@
 <template>
-    <ion-content :scroll-y="false" :fullscreen="true">
+    <ion-content :scroll-y="true" :fullscreen="true">
         <ion-card>
             <ion-card-header>
                 <ion-card-title>{{ $t('question') }}</ion-card-title>
@@ -36,7 +36,7 @@
     </ion-content>
 </template>
 <script setup>
-import { IonContent, IonCard, IonCardContent, IonCardTitle, IonCardHeader } from '@ionic/vue';
+import { IonContent, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonButton } from '@ionic/vue';
 defineProps(["duel", "myTurn", "currentTurn", "oponent"]);
 const emit = defineEmits(["duel", "myTurn", "currentTurn"]);
 
@@ -47,7 +47,9 @@ const setCardResult = (result) => {
 </script>
 <style>
 .button-wrapper {
-    margin: 15px
+    margin: 15px;
+    margin-bottom: 25px;
+    height: 50px;
 }
 
 .rate-button {

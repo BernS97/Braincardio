@@ -15,9 +15,7 @@
         <ion-toolbar slot="start">
           <ion-title size="large">{{ $t('decks') }}</ion-title>
           <ion-buttons slot="primary">
-            <ion-button>
-              <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>
-            </ion-button>
+            <img class="navLogo" src="@/assets/images/logo.png" alt="logo">
           </ion-buttons>
         </ion-toolbar>
         <ion-toolbar>
@@ -31,9 +29,8 @@
 </template>
 
 <script setup>
-import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonSearchbar } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonSearchbar } from '@ionic/vue';
 import { ref, watch } from "vue";
-import { notificationsOutline, add } from 'ionicons/icons';
 import { useCollection } from "vuefire";
 import { db } from "@/plugins/firebase.js";
 import { useRouter } from 'vue-router';

@@ -25,42 +25,19 @@
       </ion-header>
       <ion-list :inset="true">
         <ion-item>
-          <ion-input
-            :label="$t('title')"
-            label-placement="stacked"
-            :maxlength="50"
-            :placeholder="$t('titlePlaceholder')"
-            @ionInput="deck.name = $event.target.value"
-            :value="deck.name"
-          ></ion-input>
+          <ion-input :label="$t('title')" label-placement="stacked" :maxlength="50" :placeholder="$t('titlePlaceholder')"
+            @ionInput="deck.name = $event.target.value" :value="deck.name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input
-            :label="$t('subject')"
-            label-placement="stacked"
-            :maxlength="20"
-            :value="deck.subject"
-            :placeholder="$t('subjectPlaceholder')"
-            @ionInput="deck.subject = $event.target.value"
-          />
+          <ion-input :label="$t('subject')" label-placement="stacked" :maxlength="20" :value="deck.subject"
+            :placeholder="$t('subjectPlaceholder')" @ionInput="deck.subject = $event.target.value" />
         </ion-item>
         <ion-item>
-          <ion-input
-            :label="$t('lecturer')"
-            label-placement="stacked"
-            :maxlength="50"
-            :value="deck.lecturer"
-            :placeholder="$t('lecturerPlaceholder')"
-            @ionInput="deck.lecturer = $event.target.value"
-          />
+          <ion-input :label="$t('lecturer')" label-placement="stacked" :maxlength="50" :value="deck.lecturer"
+            :placeholder="$t('lecturerPlaceholder')" @ionInput="deck.lecturer = $event.target.value" />
         </ion-item>
       </ion-list>
-      <deck-users
-        v-if="!loading"
-        :deck="deck"
-        @added="addUsers"
-        @removed="removeUser"
-      />
+      <deck-users v-if="!loading" :deck="deck" @added="addUsers" @removed="removeUser" />
       <ion-list :inset="true">
         <ion-list-header>
           <ion-label>{{ $t("cards") }}</ion-label>
@@ -90,13 +67,7 @@
         </div>
       </ion-list>
       <CreateCardModal ref="modal" trigger="open-modal" @added="addCard" />
-      <ion-button
-        v-if="id"
-        class="deleteButton"
-        expand="block"
-        @click="deleteDeck"
-        color="danger"
-      >
+      <ion-button v-if="id" class="deleteButton" expand="block" @click="deleteDeck" color="danger">
         <div>Delete</div>
       </ion-button>
       <loading-spinner v-if="loading" :message="$t('loggingIn')" />
@@ -153,11 +124,11 @@ const { t } = useI18n();
 const deck = props.id
   ? useDocument(doc(db, "decks", props.id))
   : ref({
-      name: "",
-      lecturer: "",
-      cards: [],
-      users: [],
-    });
+    name: "",
+    lecturer: "",
+    cards: [],
+    users: [],
+  });
 let cards = [];
 
 watch(deck, () => {
@@ -247,8 +218,7 @@ const deleteDeck = async () => {
 </script>
 
 <style>
-.header-collapse-condense-inactive:not(.header-collapse-condense)
-  ion-toolbar.toolbar-searchbar {
+.header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.toolbar-searchbar {
   display: none;
 }
 

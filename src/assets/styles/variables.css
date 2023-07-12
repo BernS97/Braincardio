@@ -244,3 +244,12 @@ http://ionicframework.com/docs/theming/ */
 ion-tab-button ion-badge {
   top: 10px;
 }
+
+.navLogo {
+  width: 35px;
+  margin-right: 15px;
+}
+
+.modal-handle {
+  display: none;
+}

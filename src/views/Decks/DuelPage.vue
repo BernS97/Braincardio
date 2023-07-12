@@ -10,7 +10,6 @@
         </ion-title>
       </ion-toolbar>
     </ion-header>
-
     <duel-done-card v-if="duel?.done" :duel="duel" />
     <duel-lobby-page v-if="!duel?.done && started !== true" :duel="duel" :actives="actives" />
     <duel-answer-card v-if="ready && !duel?.done && myTurn && currentTurn?.card && currentTurn.userAnswer == null"
@@ -46,6 +45,7 @@ const actives = ref([]);
 const userStore = useUserStore();
 const userId = userStore.getLoggedInUserProfile.id;
 const oponent = ref();
+const cards = ref();
 const started = ref(false);
 const count = ref(3);
 let interval = null;
@@ -117,7 +117,7 @@ watch(duel, () => {
 
 const startGame = () => {
   const chooser = duel?.value?.turns.length > 0 ? currentTurn?.value?.userId : duel.value.users[duel.value.starter].id
-  if (chooser == userId && !duel.value.done) {//decides who starts
+  if (chooser == userId && userId && !duel.value.done) {//decides who starts
     addTurn(null);
     chooseCard();
   }
@@ -132,7 +132,7 @@ const chooseCard = async () => {
     component: ChooseCardModal,
     componentProps: {
       modalController: modalController,
-      cards: duel?.value?.deck?.cards
+      cards: cards.value
     },
     breakpoints: [0, 0.3, 0.5, 0.8, 1],
     initialBreakpoint: 1.0,
@@ -141,6 +141,10 @@ const chooseCard = async () => {
   modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
+    const cardIndex = cards.value.findIndex((card) => card.id === data.value.id);
+    if (cardIndex > -1) {
+      cards.value.splice(cardIndex, 1);
+    }
     editTurn(data.value);
   }
 }
@@ -191,6 +195,7 @@ onBeforeMount(() => {
         active.ready = true;
       return active;
     })
+    cards.value = duel?.value?.deck?.cards;
     updateDuel({
       actives: duel.value.actives
     })

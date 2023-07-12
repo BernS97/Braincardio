@@ -85,7 +85,7 @@ const cancel = () => {
 </script>
 <style lang="scss">
 .color-list {
-    height: 25px;
+    height: 50px;
 }
 
 .color {
@@ -93,6 +93,7 @@ const cancel = () => {
     width: 25px;
     float: left;
     margin-right: 15px;
+    margin-bottom: 10px;
 }
 
 .emoji {

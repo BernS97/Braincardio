@@ -1,5 +1,5 @@
 <template>
-    <ion-content :scroll-y="false" :fullscreen="true" v-if="duel?.done">
+    <ion-content :scroll-y="true" :fullscreen="true" v-if="duel?.done">
         <ion-card v-if="winner?.user" class="winner" @click="addConfetti(emojis)">
             <user-avatar :userProfile="winner?.user" />
             <ion-card-header>
@@ -27,20 +27,17 @@
             <ion-card-header>
                 <ion-card-title>{{ $t('draw') }}</ion-card-title>
             </ion-card-header>
-
-            <ion-card-content>
-                {{ $t('drawText') }}
-            </ion-card-content>
         </ion-card>
         <ion-list :inset="true">
             <ion-list-header>
                 <ion-label>{{ $t('turns') }}</ion-label>
             </ion-list-header>
             <ion-item v-for="turn in duel.turns">
-                <div slot="start" v-if="turn?.user?.image">
-                    <user-avatar class="small avatar" :userProfile="turn?.user" />
+                <div slot="start">
+                    <user-avatar class="small avatar"
+                        :userProfile="duel.users.filter((user) => user.id === turn.userId)[0]" />
                 </div>
-                <ion-label v-html="turn?.card.question"></ion-label>
+                <ion-label v-html="turn?.card?.question"></ion-label>
                 <ion-icon class="decline" :icon="closeOutline" color="danger" slot="end" v-if="turn.result === 0" />
                 <ion-icon class="accept" :icon="checkmarkOutline" color="success" slot="end" v-if="turn.result === 1" />
             </ion-item>
@@ -61,9 +58,6 @@ const winner = ref(null);
 let emojis = [];
 props.duel.users.forEach(user => {
     const corrects = props.duel.turns.filter((turn) => turn.userId == user.id && turn.result == 1).length;
-    props.duel.turns.map((turn) => {
-        turn.user = props.duel.users.filter((user) => user.id === turn.userId)[0];
-    });
     if (!winner.value || winner.value.corrects < corrects) {
         winner.value = {
             corrects: corrects,
@@ -76,8 +70,8 @@ props.duel.users.forEach(user => {
 });
 
 onMounted(() => {
-    if (!Array.isArray(winner.value))
-        emojis = [winner.value.user.image.emoji];
+    if (!Array.isArray(winner.value) && winner.value)
+        emojis = [winner?.value?.user?.image?.emoji];
     addConfetti(emojis);
     addConfetti(emojis);
     addConfetti(emojis);

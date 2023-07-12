@@ -4,47 +4,56 @@
       <ion-toolbar>
         <ion-buttons slot="start">
         </ion-buttons>
-        <ion-title>{{ $t('ceateDuel') }}</ion-title>
-        <ion-buttons slot="end">
-          <ion-button :strong="true" @click="save">{{ $t('create') }}</ion-button>
-        </ion-buttons>
+        <ion-title>{{ $t('chooseCard') }}</ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar :debounce="20" @keydown="handleSearch($event.target.value.toLowerCase())" :animated="true"
+          :placeholder="$t('search')"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-list :inset="true">
-        <ion-list-header>
-          <ion-label>{{ $t('cards') }}</ion-label>
-        </ion-list-header>
-        <ion-item v-for="card in cards" :key="card.id" @click="chooseCard(card)">
+      <ion-header collapse="condense">
+        <ion-toolbar slot="start">
+          <ion-title size="large">{{ $t('cards') }}</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar :debounce="20" @keydown="handleSearch($event.target.value.toLowerCase())" :animated="true"
+            :placeholder="$t('search')"></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+      <ion-card v-for="card in searchCards" :key="card.id" @click="chooseCard(card)">
+        <ion-card-content>
           <div v-html="card.question"></div>
-        </ion-item>
-      </ion-list>
+        </ion-card-content>
+      </ion-card>
     </ion-content>
   </ion-page>
 </template>
 <script setup>
 import {
   IonButtons,
-  IonButton,
   IonPage,
   IonHeader,
   IonContent,
   IonToolbar,
   IonTitle,
-  IonItem,
-  IonList,
-  IonListHeader,
-  IonLabel,
+  IonCard,
+  IonCardContent,
+  IonSearchbar
 } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps(["modalController", "cards"]);
 const selectedCard = ref();
-const chooseCardModal = ref();
+const searchCards = ref(props.cards);
 const chooseCard = (card) => {
   selectedCard.value = card;
   close();
 }
+
+const handleSearch = (search) => {
+  searchCards.value = props.cards.filter(d => d.question.toLowerCase().indexOf(search) > -1);
+};
 
 const close = () => {
   props.modalController.dismiss(selectedCard, 'cancel');

@@ -12,9 +12,7 @@
             <span v-if="user" id="helloText">{{ $t('hello', { name: user?.name }) }}</span>
           </ion-title>
           <ion-buttons slot="primary">
-            <ion-button>
-              <ion-icon slot="icon-only" :icon="notificationsOutline"></ion-icon>
-            </ion-button>
+            <img class="navLogo" src="@/assets/images/logo.png" alt="logo">
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -71,13 +69,12 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/plugins/pinia/users';
-import { notificationsOutline } from "ionicons/icons";
 
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
-const decks = useCollection(collection(db, 'decks'));
 const currentUserDoc = doc(db, "users", userStore.getLoggedInUserProfile.id);
+const decks = useCollection(query(collection(db, "decks"), where("users", "array-contains", currentUserDoc)));
 const duels = useCollection(query(collection(db, "duels"), where("done", "==", false), where("users", "array-contains", currentUserDoc)));
 const user = computed(() => userStore.getLoggedInUserProfile);
 watch(decks, () => {
@@ -85,12 +82,7 @@ watch(decks, () => {
     deck.stats = await useLearnStatistics(deck.id);
   });
 })
-onBeforeMount(async () => {
-  await decks.value.forEach(async deck => {
-    deck.stats = await useLearnStatistics(deck.id);
-  });
 
-});
 </script>
 <style scoped>
 .carousel__pagination {
