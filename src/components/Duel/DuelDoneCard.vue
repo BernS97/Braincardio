@@ -73,14 +73,12 @@ onMounted(() => {
     if (!Array.isArray(winner.value) && winner.value)
         emojis = [winner?.value?.user?.image?.emoji];
     addConfetti(emojis);
-    addConfetti(emojis);
-    addConfetti(emojis);
 })
 
 const addConfetti = (emojis) => {
     jsConfetti.addConfetti(
         {
-            emojis: [emojis]
+            emojis: [emojis.join('')]
         });
 }
 </script>

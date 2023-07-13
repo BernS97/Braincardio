@@ -75,7 +75,7 @@ const currentUserDoc = doc(db, "users", props.userProfile.id);
 
 const userName = ref('');
 const addFriend = async () => {
-    if (userName.value === userProfile.value)
+    if (userName.value === props.userProfile.name)
         console.log("Adding own user is not possible."); //TODO: at toast message.
     else {
         const { data: users, promise } = useCollection(
@@ -86,7 +86,7 @@ const addFriend = async () => {
         if (friend) {
             const friendRequest = {
                 approved: null,
-                from: doc(db, "users", userProfile.value.id),
+                from: doc(db, "users", props.userProfile.id),
                 to: doc(db, "users", friend.id),
             };
             addDoc(collection(db, "friendRequests"), friendRequest);
@@ -96,18 +96,18 @@ const addFriend = async () => {
 };
 const removeFriend = async (friend) => {
 
-    userProfile.value.friends = userProfile.value.friends.filter((user) => user.id !== friend.id);
-    const userProfileFriends = userProfile.value.friends.map((user) => {
+    props.userProfile.friends = props.userProfile.friends.filter((user) => user.id !== friend.id);
+    const userProfileFriends = props.userProfile.friends.map((user) => {
         if (user.id) return doc(db, "users", user.id);
     });
 
-    friend.friends = friend.friends.filter((user) => user.id !== userProfile.value.id);
+    friend.friends = friend.friends.filter((user) => user.id !== props.userProfile.id);
     const removeUserFriends = friend.friends.map((user) => {
         if (user.id) return doc(db, "users", user.id);
     });
 
     await updateDoc(doc(db, "users", friend.id), { friends: removeUserFriends });
-    await updateDoc(doc(db, "users", userProfile.value.id), { friends: userProfileFriends });
+    await updateDoc(doc(db, "users", props.userProfile.id), { friends: userProfileFriends });
 
 };
 
